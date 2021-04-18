@@ -1,7 +1,12 @@
 import React from "react";
 
-const Sidebar = () => {
-  return <div></div>;
+const Sidebar = ({ children }) => {
+  return (
+    <div>
+      Options
+      {children}
+    </div>
+  );
 };
 
 export default Sidebar;

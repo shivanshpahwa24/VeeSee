@@ -1,7 +1,7 @@
 import React from "react";
 
 const VideoPlayer = () => {
-  return <div></div>;
+  return <div>VideoPlayer</div>;
 };
 
 export default VideoPlayer;
