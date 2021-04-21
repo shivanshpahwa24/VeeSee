@@ -4,6 +4,7 @@ import "./App.css";
 import VideoPlayer from "./components/VideoPlayer";
 import Sidebar from "./components/Sidebar";
 import Notifications from "./components/Notifications";
+import { ContextProvider } from "./Context";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -35,17 +36,19 @@ const App = () => {
   const classes = useStyles();
 
   return (
-    <div className={classes.wrapper}>
-      <AppBar className={classes.appBar} position="static" color="inherit">
-        <Typography variant="h2" align="center">
-          Video Chat
-        </Typography>
-      </AppBar>
-      <VideoPlayer />
-      <Sidebar>
-        <Notifications />
-      </Sidebar>
-    </div>
+    <ContextProvider>
+      <div className={classes.wrapper}>
+        <AppBar className={classes.appBar} position="static" color="inherit">
+          <Typography variant="h2" align="center">
+            Video Chat
+          </Typography>
+        </AppBar>
+        <VideoPlayer />
+        <Sidebar>
+          <Notifications />
+        </Sidebar>
+      </div>
+    </ContextProvider>
   );
 };
 
