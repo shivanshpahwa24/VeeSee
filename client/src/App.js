@@ -6,6 +6,7 @@ import VideoPlayer from "./components/VideoPlayer";
 import Sidebar from "./components/Sidebar";
 import Notifications from "./components/Notifications";
 import { ContextProvider } from "./Context";
+import "bootstrap/dist/css/bootstrap.css";
 
 const App = () => {
   return (

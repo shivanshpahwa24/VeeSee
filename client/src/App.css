@@ -1,13 +1,50 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+
+:root {
+  --dark-color-a: #5d5d5d;
+  --dark-color-b: #1cb8a9;
+  --light-color: #e3fff8;
+  --success-color: #5cb85c;
+  --error-color: #d9534f;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* body {
+body {
+  /* 
   background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
     url(https://i.pinimg.com/originals/8f/14/57/8f14578ef69a4c53352955d1e072eda6.png);
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-size: cover;
-} */
+  background-size: cover; */
+  font-family: "Roboto", sans-serif;
+}
+
+.navbar {
+  min-height: 10vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--dark-color-a);
+  font-size: 1.1rem;
+}
+
+.navbar-logo {
+  height: 3rem;
+}
+.grey-text {
+  color: var(--dark-color-a);
+}
+@media (max-width: 576px) {
+  .navbar {
+    font-size: 0.9rem;
+  }
+
+  .navbar-logo {
+    height: 2.5rem;
+  }
+}
