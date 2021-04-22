@@ -2,10 +2,8 @@
 
 :root {
   --dark-color-a: #5d5d5d;
-  --dark-color-b: #1cb8a9;
-  --light-color: #e3fff8;
-  --success-color: #5cb85c;
-  --error-color: #d9534f;
+  --dark-color-b: #166b5f;
+  --dark-color-c: #353535;
 }
 
 * {
@@ -39,6 +37,16 @@ body {
 .grey-text {
   color: var(--dark-color-a);
 }
+
+.callButton {
+  background: var(--dark-color-b);
+  color: white;
+}
+.landing-text {
+  margin: 3rem;
+  color: var(--dark-color-c);
+}
+
 @media (max-width: 576px) {
   .navbar {
     font-size: 0.9rem;

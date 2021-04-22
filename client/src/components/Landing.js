@@ -1,22 +1,16 @@
 import React from "react";
-import Navbar from "./Navbar";
+import Sidebar from "./Sidebar";
 
 const Landing = () => {
   return (
-    <div>
-      <Navbar />
+    <div className="container text-center mx-auto">
       <div className="landing-text">
-        <h1 className="font-weight-normal">
-          Premium video meetings.
-          <br />
-          Now free for everyone.
-        </h1>
+        <h1>Remote connection with your team</h1>
         <p className="grey-text">
-          We re-engineered the service we built for secure business meetings,
-          VeeSee, to make it free and available for all.
+          Work together in ways that go beyond with easy video from anywhere
         </p>
       </div>
-      <div></div>
+      <Sidebar />
     </div>
   );
 };
