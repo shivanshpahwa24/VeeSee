@@ -22,16 +22,11 @@ const Sidebar = ({ children }) => {
   const [idAlertOpen, setIdAlertOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(true);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    callUser(idToCall);
-  };
-
   return (
     <div className="d-sm-flex justify-content-around align-items-center">
       <div>
         <h2 className="grey-text">Call a user</h2>
-        <form onSubmit={handleSubmit} className="">
+        <form className="">
           <input
             className="form-control"
             name="name"
@@ -52,7 +47,11 @@ const Sidebar = ({ children }) => {
             id="idToCall"
             required
           />
-          <button type="submit" className="btn callButton">
+          <button
+            type="button"
+            onClick={() => callUser(idToCall)}
+            className="btn callButton"
+          >
             Call
           </button>
         </form>

@@ -28,13 +28,13 @@ const ContextProvider = ({ children }) => {
   const userVideo = useRef();
   const connectionRef = useRef();
 
-  /*   useEffect(() => {
+  useEffect(() => {
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: true })
       .then((currentStream) => {
         setStream(currentStream);
 
-         myVideo.current.srcObject = currentStream; 
+        myVideo.current.srcObject = currentStream;
       });
 
     socket.on("me", (id) => setMe(id));
@@ -42,7 +42,7 @@ const ContextProvider = ({ children }) => {
     socket.on("callUser", ({ from, name: callerName, signal }) => {
       setCall({ isReceivingCall: true, from, name: callerName, signal });
     });
-  }, []); */
+  }, []);
 
   const answerCall = () => {
     setCallAccepted(true);
@@ -54,7 +54,7 @@ const ContextProvider = ({ children }) => {
     });
 
     peer.on("stream", (currentStream) => {
-      /* userVideo.current.srcObject = currentStream; */
+      userVideo.current.srcObject = currentStream;
     });
 
     peer.signal(call.signal);
@@ -75,7 +75,7 @@ const ContextProvider = ({ children }) => {
     });
 
     peer.on("stream", (currentStream) => {
-      /* userVideo.current.srcObject = currentStream; */
+      userVideo.current.srcObject = currentStream;
     });
 
     socket.on("callAccepted", (signal) => {

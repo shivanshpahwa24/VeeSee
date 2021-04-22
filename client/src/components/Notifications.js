@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { Redirect } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -15,6 +16,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const Notifications = ({ modalOpen, setModalOpen }) => {
   const { answerCall, call } = useContext(SocketContext);
+  const [callAnswered, setCallAnswered] = useState(false);
 
   const handleClose = () => {
     setModalOpen(false);
@@ -40,7 +42,13 @@ const Notifications = ({ modalOpen, setModalOpen }) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={answerCall} color="primary">
+          <Button
+            onClick={() => {
+              answerCall();
+              setCallAnswered(true);
+            }}
+            color="primary"
+          >
             Yes
           </Button>
           <Button onClick={handleClose} color="secondary">
@@ -48,6 +56,7 @@ const Notifications = ({ modalOpen, setModalOpen }) => {
           </Button>
         </DialogActions>
       </Dialog>
+      {callAnswered && <Redirect to="/call" />}
     </>
   );
 };
