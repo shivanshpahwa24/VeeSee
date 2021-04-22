@@ -16,6 +16,7 @@ const App = () => {
         <Navbar />
         <Switch>
           <Route exact path="/" component={Landing} />
+          <Route exact path="/call" component={VideoPlayer} />
         </Switch>
       </Router>
     </ContextProvider>

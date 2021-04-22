@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Snackbar from "@material-ui/core/Snackbar";
-
+import Notifications from "./Notifications";
 import { SocketContext } from "../Context";
 
 const Sidebar = ({ children }) => {
@@ -14,10 +14,13 @@ const Sidebar = ({ children }) => {
     callEnded,
     leaveCall,
     callUser,
+    answerCall,
+    call,
   } = useContext(SocketContext);
   const [idToCall, setIdToCall] = useState("");
   const [copied, setCopied] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [idAlertOpen, setIdAlertOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(true);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -60,7 +63,7 @@ const Sidebar = ({ children }) => {
           text={me}
           onCopy={() => {
             setCopied(true);
-            setOpen(true);
+            setIdAlertOpen(true);
           }}
         >
           <button>Copy Your ID</button>
@@ -68,13 +71,16 @@ const Sidebar = ({ children }) => {
         {copied && (
           <Snackbar
             anchorOrigin={("bottom", "left")}
-            open={open}
-            onClose={() => setOpen(false)}
+            open={idAlertOpen}
+            onClose={() => setIdAlertOpen(false)}
             message={`ID copied : ${me}`}
             key="bottomleft"
           />
         )}
       </div>
+      {call.isReceivingCall && !callAccepted && (
+        <Notifications modalOpen={modalOpen} setModalOpen={setModalOpen} />
+      )}
       {callAccepted && <Redirect to="/call" />}
     </div>
   );
