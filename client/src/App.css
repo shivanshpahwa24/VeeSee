@@ -46,6 +46,11 @@ body {
   margin: 3rem;
   color: var(--dark-color-c);
 }
+.headerDivider {
+  border-left: 1px solid #38546d;
+  border-right: 1px solid #16222c;
+  height: 80px;
+}
 
 @media (max-width: 576px) {
   .navbar {

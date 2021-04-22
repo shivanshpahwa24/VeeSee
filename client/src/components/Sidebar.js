@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import Snackbar from "@material-ui/core/Snackbar";
 
 import { SocketContext } from "../Context";
 
@@ -15,6 +16,8 @@ const Sidebar = ({ children }) => {
     callUser,
   } = useContext(SocketContext);
   const [idToCall, setIdToCall] = useState("");
+  const [copied, setCopied] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,10 +25,10 @@ const Sidebar = ({ children }) => {
   };
 
   return (
-    <div>
-      <h2 className="grey-text">Call a user</h2>
+    <div className="d-sm-flex justify-content-around align-items-center">
       <div>
-        <form onSubmit={handleSubmit}>
+        <h2 className="grey-text">Call a user</h2>
+        <form onSubmit={handleSubmit} className="">
           <input
             className="form-control"
             name="name"
@@ -50,6 +53,27 @@ const Sidebar = ({ children }) => {
             Call
           </button>
         </form>
+      </div>
+      <div className="d-none d-sm-block headerDivider"></div>
+      <div>
+        <CopyToClipboard
+          text={me}
+          onCopy={() => {
+            setCopied(true);
+            setOpen(true);
+          }}
+        >
+          <button>Copy Your ID</button>
+        </CopyToClipboard>
+        {copied && (
+          <Snackbar
+            anchorOrigin={("bottom", "left")}
+            open={open}
+            onClose={() => setOpen(false)}
+            message={`ID copied : ${me}`}
+            key="bottomleft"
+          />
+        )}
       </div>
       {callAccepted && <Redirect to="/call" />}
     </div>
