@@ -1,13 +1,22 @@
-import { Typography, AppBar } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
+import Landing from "./components/Landing";
 import VideoPlayer from "./components/VideoPlayer";
 import Sidebar from "./components/Sidebar";
 import Notifications from "./components/Notifications";
 import { ContextProvider } from "./Context";
 
 const App = () => {
-  return <ContextProvider></ContextProvider>;
+  return (
+    <ContextProvider>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={Landing} />
+        </Switch>
+      </Router>
+    </ContextProvider>
+  );
 };
 
 export default App;
