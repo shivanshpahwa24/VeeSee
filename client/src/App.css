@@ -2,7 +2,7 @@
 
 :root {
   --dark-color-a: #5d5d5d;
-  --dark-color-b: #166b5f;
+  --dark-color-b: #1e7469;
   --dark-color-c: #353535;
   --video-player: #202125;
 }
@@ -42,15 +42,17 @@ body {
 .callButton {
   background: var(--dark-color-b);
   color: white;
+  border: none;
+  padding: 0.5rem 2rem;
+  border-radius: 2px;
 }
 .landing-text {
-  margin: 3rem;
+  margin: 5rem 0 8rem 0;
   color: var(--dark-color-c);
 }
-.headerDivider {
-  border-left: 1px solid #38546d;
-  border-right: 1px solid #16222c;
-  height: 80px;
+
+.separator {
+  border-right: 2px solid #a0a0a0;
 }
 .callRoom {
   background-color: #111111;
@@ -97,8 +99,24 @@ body {
   .navbar {
     font-size: 0.9rem;
   }
-
   .navbar-logo {
-    height: 2.5rem;
+    height: 2.3rem;
+  }
+  .landing-text {
+    font-size: 0.9rem;
+    margin-bottom: 5rem;
+  }
+  .landing-text h1 {
+    font-size: 1.9rem;
+  }
+  .options-heading {
+    font-size: 1.4rem;
+  }
+  .separator {
+    border: none;
+  }
+  .callButton {
+    padding: 0.5rem 2rem;
+    font-size: 0.9rem;
   }
 }
