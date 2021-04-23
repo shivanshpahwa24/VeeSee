@@ -24,7 +24,7 @@ body {
 }
 
 .navbar {
-  min-height: 10vh;
+  height: 8vh;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -33,7 +33,7 @@ body {
 }
 
 .navbar-logo {
-  height: 3rem;
+  height: 2.5rem;
 }
 .grey-text {
   color: var(--dark-color-a);
@@ -52,13 +52,36 @@ body {
   border-right: 1px solid #16222c;
   height: 80px;
 }
-
 .callRoom {
   background-color: #111111;
-  min-height: 90vh;
-  max-height: 90vh;
+}
+.video-player-container {
+  min-height: 84vh;
 }
 
+.video-player {
+  background: var(--video-player);
+  height: 60vh;
+  width: 50%;
+}
+.callRoom-footer {
+  background: white;
+  height: 8vh;
+}
+.actualVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.endCall-button {
+  color: red;
+  border: 1px solid var(--dark-color-a);
+
+  border-radius: 50%;
+}
+.endCall-button:hover {
+  cursor: pointer;
+}
 @media (max-width: 576px) {
   .navbar {
     font-size: 0.9rem;

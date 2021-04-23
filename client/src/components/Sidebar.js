@@ -60,10 +60,10 @@ const Sidebar = ({ children }) => {
       <div>
         <CopyToClipboard
           text={me}
-          onCopy={() => {
+          /*  onCopy={() => {
             setCopied(true);
             setIdAlertOpen(true);
-          }}
+          }} */
         >
           <button>Copy Your ID</button>
         </CopyToClipboard>

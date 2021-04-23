@@ -14,7 +14,9 @@ const Navbar = () => {
 
   return (
     <div className="navbar shadow px-3">
-      <img className="navbar-logo" src={Logo} alt="" />
+      <div>
+        <img className="navbar-logo" src={Logo} alt="" />
+      </div>
       <div className="navbar-date-format">
         <span>
           {time}
