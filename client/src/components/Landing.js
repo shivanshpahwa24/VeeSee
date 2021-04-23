@@ -1,5 +1,5 @@
 import React from "react";
-import Sidebar from "./Sidebar";
+import OptionsProvider from "./OptionsProvider";
 
 const Landing = () => {
   return (
@@ -10,7 +10,7 @@ const Landing = () => {
           Work together in ways that go beyond with easy video from anywhere
         </p>
       </div>
-      <Sidebar />
+      <OptionsProvider />
     </div>
   );
 };

@@ -38,7 +38,7 @@ const VideoPlayer = () => {
           )}
         </div>
         <div className="video-player mr-2 ml-1">
-          {stream && (
+          {callAccepted && !callEnded && (
             <video
               playsInline
               ref={userVideo}

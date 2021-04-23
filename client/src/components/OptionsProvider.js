@@ -5,7 +5,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import CallReceivingNotification from "./CallReceivingNotification";
 import { SocketContext } from "../Context";
 
-const Sidebar = ({ children }) => {
+const OptionsProvider = ({ children }) => {
   const {
     me,
     callAccepted,
@@ -20,7 +20,8 @@ const Sidebar = ({ children }) => {
   const [idToCall, setIdToCall] = useState("");
   const [copied, setCopied] = useState(false);
   const [idAlertOpen, setIdAlertOpen] = useState(false);
-  const [modalOpen, setModalOpen] = useState(true);
+  const [callingModalOpen, setCallingModalOpen] = useState(true);
+  const [receivingModalOpen, setReceivingModalOpen] = useState(true);
 
   return (
     <div className="d-sm-flex justify-content-around align-items-center">
@@ -79,8 +80,8 @@ const Sidebar = ({ children }) => {
       </div>
       {call.isReceivingCall && !callAccepted && (
         <CallReceivingNotification
-          modalOpen={modalOpen}
-          setModalOpen={setModalOpen}
+          modalOpen={receivingModalOpen}
+          setModalOpen={setReceivingModalOpen}
         />
       )}
       {callAccepted && <Redirect to="/call" />}
@@ -88,4 +89,4 @@ const Sidebar = ({ children }) => {
   );
 };
 
-export default Sidebar;
+export default OptionsProvider;
