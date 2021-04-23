@@ -18,6 +18,7 @@ const socket = io(ENDPOINT);
 
 const ContextProvider = ({ children }) => {
   const [callAccepted, setCallAccepted] = useState(false);
+  const [calling, setCalling] = useState(false);
   const [callEnded, setCallEnded] = useState(false);
   const [stream, setStream] = useState();
   const [name, setName] = useState("");
@@ -55,6 +56,7 @@ const ContextProvider = ({ children }) => {
   };
 
   const callUser = (id) => {
+    setCalling(true);
     const peer = new Peer({ initiator: true, trickle: false, stream });
 
     peer.on("signal", (data) => {
@@ -110,6 +112,8 @@ const ContextProvider = ({ children }) => {
         leaveCall,
         answerCall,
         getUserMedia,
+        calling,
+        setCalling,
       }}
     >
       {children}

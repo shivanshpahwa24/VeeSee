@@ -3,14 +3,21 @@ import { Redirect } from "react-router-dom";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Snackbar from "@material-ui/core/Snackbar";
 import CallReceivingNotification from "./CallReceivingNotification";
+import CallOutgoingNotification from "./CallOutgoingNotification";
 import { SocketContext } from "../Context";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import CallIcon from "@material-ui/icons/Call";
 
 const OptionsProvider = () => {
-  const { me, callAccepted, name, setName, callUser, call } = useContext(
-    SocketContext
-  );
+  const {
+    me,
+    callAccepted,
+    name,
+    setName,
+    callUser,
+    call,
+    calling,
+  } = useContext(SocketContext);
   const [idToCall, setIdToCall] = useState("");
   const [idAlertOpen, setIdAlertOpen] = useState(false);
   const [callingModalOpen, setCallingModalOpen] = useState(true);
@@ -28,7 +35,13 @@ const OptionsProvider = () => {
           <h4 className="options-heading grey-text text-center mb-5">
             Call a user by specifying their ID
           </h4>
-          <form className="mx-2">
+          <form
+            className="mx-2"
+            onSubmit={(e) => {
+              e.preventDefault();
+              callUser(idToCall);
+            }}
+          >
             <div className="d-flex my-2">
               <input
                 className="form-control mr-2"
@@ -51,11 +64,7 @@ const OptionsProvider = () => {
                 required
               />
             </div>
-            <button
-              type="button"
-              onClick={() => callUser(idToCall)}
-              className="callButton"
-            >
+            <button type="submit" className="callButton">
               <CallIcon fontSize="small" style={{ margin: "0" }} /> Call User
             </button>
 
@@ -91,6 +100,13 @@ const OptionsProvider = () => {
           key={vertical + horizontal}
         />
       </div>
+      {calling && !callAccepted && (
+        <CallOutgoingNotification
+          modalOpen={callingModalOpen}
+          setModalOpen={setCallingModalOpen}
+          id={idToCall}
+        />
+      )}
       {call.isReceivingCall && !callAccepted && (
         <CallReceivingNotification
           modalOpen={receivingModalOpen}

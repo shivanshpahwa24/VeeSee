@@ -111,6 +111,7 @@ body {
   }
   .options-heading {
     font-size: 1.4rem;
+    font-weight: normal;
   }
   .separator {
     border: none;
