@@ -67,6 +67,9 @@ body {
 .callRoom-footer {
   background: white;
   height: 8vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .actualVideo {
   width: 100%;
@@ -75,8 +78,9 @@ body {
 }
 .endCall-button {
   color: red;
-  border: 1px solid var(--dark-color-a);
-
+  border: 1px solid rgb(194, 194, 194);
+  background: white;
+  padding: 0.5rem;
   border-radius: 50%;
 }
 .endCall-button:hover {

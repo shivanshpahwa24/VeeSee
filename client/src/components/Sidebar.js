@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Snackbar from "@material-ui/core/Snackbar";
-import Notifications from "./Notifications";
+import CallReceivingNotification from "./CallReceivingNotification";
 import { SocketContext } from "../Context";
 
 const Sidebar = ({ children }) => {
@@ -78,7 +78,10 @@ const Sidebar = ({ children }) => {
         )}
       </div>
       {call.isReceivingCall && !callAccepted && (
-        <Notifications modalOpen={modalOpen} setModalOpen={setModalOpen} />
+        <CallReceivingNotification
+          modalOpen={modalOpen}
+          setModalOpen={setModalOpen}
+        />
       )}
       {callAccepted && <Redirect to="/call" />}
     </div>

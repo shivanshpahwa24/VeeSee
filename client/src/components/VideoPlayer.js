@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from "react";
+import { Redirect, useHistory } from "react-router-dom";
 import CallEndRoundedIcon from "@material-ui/icons/CallEndRounded";
 import { SocketContext } from "../Context";
 
@@ -15,8 +16,11 @@ const VideoPlayer = () => {
     leaveCall,
   } = useContext(SocketContext);
 
+  const history = useHistory();
+
   useEffect(() => {
     getUserMedia();
+    return {};
   }, []);
 
   return (
@@ -34,7 +38,7 @@ const VideoPlayer = () => {
           )}
         </div>
         <div className="video-player mr-2 ml-1">
-          {callAccepted && !callEnded && (
+          {stream && (
             <video
               playsInline
               ref={userVideo}
@@ -45,15 +49,16 @@ const VideoPlayer = () => {
         </div>
       </div>
       <div className="callRoom-footer">
-        <button onClick={leaveCall}>
-          <CallEndRoundedIcon
-          /* className="endCall-button"
-          fontSize="medium"
-          onClick={leaveCall}
-          padding={20} */
-          />
+        <button
+          onClick={() => {
+            leaveCall();
+          }}
+          className="endCall-button"
+        >
+          <CallEndRoundedIcon />
         </button>
       </div>
+      {callEnded && <Redirect to="/" />}
     </div>
   );
 };
