@@ -4,6 +4,7 @@
   --dark-color-a: #5d5d5d;
   --dark-color-b: #166b5f;
   --dark-color-c: #353535;
+  --video-player: #202125;
 }
 
 * {
@@ -50,6 +51,12 @@ body {
   border-left: 1px solid #38546d;
   border-right: 1px solid #16222c;
   height: 80px;
+}
+
+.callRoom {
+  background-color: #111111;
+  min-height: 90vh;
+  max-height: 90vh;
 }
 
 @media (max-width: 576px) {

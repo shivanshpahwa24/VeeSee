@@ -28,7 +28,7 @@ const ContextProvider = ({ children }) => {
   const userVideo = useRef();
   const connectionRef = useRef();
 
-  useEffect(() => {
+  /* useEffect(() => {
     navigator.mediaDevices
       .getUserMedia({ video: true, audio: true })
       .then((currentStream) => {
@@ -42,7 +42,7 @@ const ContextProvider = ({ children }) => {
     socket.on("callUser", ({ from, name: callerName, signal }) => {
       setCall({ isReceivingCall: true, from, name: callerName, signal });
     });
-  }, []);
+  }, []); */
 
   const answerCall = () => {
     setCallAccepted(true);

@@ -13,7 +13,11 @@ const VideoPlayer = () => {
     call,
   } = useContext(SocketContext);
 
-  return <div></div>;
+  return (
+    <div className="callRoom">
+      <div className="d-flex justify-content-center align-items-center"></div>
+    </div>
+  );
 };
 
 export default VideoPlayer;
