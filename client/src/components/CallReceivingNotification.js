@@ -11,7 +11,7 @@ const Notifications = ({ modalOpen, setModalOpen }) => {
   const handleClose = () => {
     setModalOpen(false);
   };
-  const dialogActions = () => {
+  const CallAction = () => {
     return (
       <>
         <Button
@@ -37,8 +37,9 @@ const Notifications = ({ modalOpen, setModalOpen }) => {
         handleClose={handleClose}
         modalOpen={modalOpen}
         dialogText={`Would you like to answer?`}
-        dialogActions={dialogActions}
-      />
+      >
+        <CallAction />
+      </DialogNotification>
       {callAnswered && <Redirect to="/call" />}
     </>
   );

@@ -23,6 +23,11 @@ const OptionsProvider = ({ children }) => {
   const [callingModalOpen, setCallingModalOpen] = useState(true);
   const [receivingModalOpen, setReceivingModalOpen] = useState(true);
 
+  const [direction, setDirection] = useState({
+    vertical: "bottom",
+    horizontal: "left",
+  });
+  const { vertical, horizontal } = direction;
   return (
     <div className="d-sm-flex justify-content-around align-items-center">
       <div>
@@ -61,22 +66,21 @@ const OptionsProvider = ({ children }) => {
       <div>
         <CopyToClipboard
           text={me}
-          /*  onCopy={() => {
-            setCopied(true);
+          onCopy={() => {
+            /* setCopied(true); */
             setIdAlertOpen(true);
-          }} */
+          }}
         >
           <button>Copy Your ID</button>
         </CopyToClipboard>
-        {copied && (
-          <Snackbar
-            anchorOrigin={("bottom", "left")}
-            open={idAlertOpen}
-            onClose={() => setIdAlertOpen(false)}
-            message={`ID copied : ${me}`}
-            key="bottomleft"
-          />
-        )}
+
+        <Snackbar
+          anchorOrigin={{ vertical, horizontal }}
+          open={idAlertOpen}
+          onClose={() => setIdAlertOpen(false)}
+          message={`ID copied : ${me}`}
+          key={vertical + horizontal}
+        />
       </div>
       {call.isReceivingCall && !callAccepted && (
         <CallReceivingNotification

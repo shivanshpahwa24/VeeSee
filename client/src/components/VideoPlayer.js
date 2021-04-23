@@ -1,7 +1,9 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import CallEndRoundedIcon from "@material-ui/icons/CallEndRounded";
 import { SocketContext } from "../Context";
+import DialogNotification from "./DialogNotification";
+import Button from "@material-ui/core/Button";
 
 const VideoPlayer = () => {
   const {
@@ -10,13 +12,19 @@ const VideoPlayer = () => {
     myVideo,
     userVideo,
     callEnded,
+    setCallEnded,
     stream,
     call,
     getUserMedia,
     leaveCall,
   } = useContext(SocketContext);
 
+  const [confirmationModal, setConfirmationModal] = useState(false);
   const history = useHistory();
+
+  const handleModalClose = () => {
+    setConfirmationModal(false);
+  };
 
   useEffect(() => {
     getUserMedia();
@@ -36,6 +44,7 @@ const VideoPlayer = () => {
               className="actualVideo"
             />
           )}
+          <p className="video-player-name">{name} (You)</p>
         </div>
         <div className="video-player mr-2 ml-1">
           {callAccepted && !callEnded && (
@@ -46,18 +55,38 @@ const VideoPlayer = () => {
               className="actualVideo"
             />
           )}
+          <p className="video-player-name">{call.name}</p>
         </div>
       </div>
       <div className="callRoom-footer">
         <button
           onClick={() => {
-            leaveCall();
+            setConfirmationModal(true);
           }}
           className="endCall-button"
         >
           <CallEndRoundedIcon />
         </button>
       </div>
+      <DialogNotification
+        dialogTitle={`Are you sure you want to leave the call?`}
+        handleClose={handleModalClose}
+        modalOpen={confirmationModal}
+      >
+        <Button
+          onClick={() => {
+            history.push("/");
+            leaveCall();
+            setCallEnded(true);
+          }}
+          color="primary"
+        >
+          Yes
+        </Button>
+        <Button onClick={handleModalClose} color="secondary">
+          No
+        </Button>
+      </DialogNotification>
       {callEnded && <Redirect to="/" />}
     </div>
   );

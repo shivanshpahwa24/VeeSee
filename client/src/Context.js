@@ -81,8 +81,6 @@ const ContextProvider = ({ children }) => {
 
   const leaveCall = () => {
     connectionRef.current.destroy();
-
-    setCallEnded(true);
   };
 
   const getUserMedia = () => {
@@ -106,6 +104,7 @@ const ContextProvider = ({ children }) => {
         name,
         setName,
         callEnded,
+        setCallEnded,
         me,
         callUser,
         leaveCall,

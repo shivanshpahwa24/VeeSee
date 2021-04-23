@@ -11,7 +11,7 @@ const DialogNotification = ({
   handleClose,
   modalOpen,
   dialogText,
-  dialogActions,
+  children,
 }) => {
   return (
     <>
@@ -30,7 +30,7 @@ const DialogNotification = ({
             {dialogText}
           </DialogContentText>
         </DialogContent>
-        <DialogActions>{dialogActions}</DialogActions>
+        <DialogActions>{children}</DialogActions>
       </Dialog>
     </>
   );
