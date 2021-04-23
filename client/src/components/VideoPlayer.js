@@ -28,7 +28,6 @@ const VideoPlayer = () => {
 
   useEffect(() => {
     getUserMedia();
-    return {};
   }, []);
 
   return (

@@ -5,20 +5,11 @@ import Snackbar from "@material-ui/core/Snackbar";
 import CallReceivingNotification from "./CallReceivingNotification";
 import { SocketContext } from "../Context";
 
-const OptionsProvider = ({ children }) => {
-  const {
-    me,
-    callAccepted,
-    name,
-    setName,
-    callEnded,
-    leaveCall,
-    callUser,
-    answerCall,
-    call,
-  } = useContext(SocketContext);
+const OptionsProvider = () => {
+  const { me, callAccepted, name, setName, callUser, call } = useContext(
+    SocketContext
+  );
   const [idToCall, setIdToCall] = useState("");
-  const [copied, setCopied] = useState(false);
   const [idAlertOpen, setIdAlertOpen] = useState(false);
   const [callingModalOpen, setCallingModalOpen] = useState(true);
   const [receivingModalOpen, setReceivingModalOpen] = useState(true);
