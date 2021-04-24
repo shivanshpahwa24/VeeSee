@@ -3,7 +3,7 @@ import OptionsProvider from "./OptionsProvider";
 
 const Landing = () => {
   return (
-    <div className="container-fluid">
+    <div className="container-fluid landing">
       <div className="landing-text text-center mx-auto">
         <h1>Remote connection with your team</h1>
         <p className="grey-text">

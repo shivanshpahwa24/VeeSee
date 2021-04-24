@@ -4,6 +4,10 @@ import CallEndRoundedIcon from "@material-ui/icons/CallEndRounded";
 import { SocketContext } from "../Context";
 import DialogNotification from "./DialogNotification";
 import Button from "@material-ui/core/Button";
+import MicIcon from "@material-ui/icons/Mic";
+import MicOffIcon from "@material-ui/icons/MicOff";
+import VideocamOutlinedIcon from "@material-ui/icons/VideocamOutlined";
+import VideocamOffOutlinedIcon from "@material-ui/icons/VideocamOffOutlined";
 
 const VideoPlayer = () => {
   const {
@@ -21,6 +25,8 @@ const VideoPlayer = () => {
 
   const [confirmationModal, setConfirmationModal] = useState(false);
   const history = useHistory();
+  const [micOff, setMicOff] = useState(false);
+  const [videoOff, setVideoOff] = useState(false);
 
   const handleModalClose = () => {
     setConfirmationModal(false);
@@ -32,8 +38,8 @@ const VideoPlayer = () => {
 
   return (
     <div className="callRoom">
-      <div className="video-player-container d-sm-flex justify-content-center align-items-center">
-        <div className="video-player mr-1 ml-2">
+      <div className="video-player-container d-flex flex-column flex-sm-row justify-content-center align-items-center">
+        <div className="video-player mr-sm-1 ml-sm-2 mt-3 mt-sm-0">
           {stream && (
             <video
               playsInline
@@ -45,7 +51,7 @@ const VideoPlayer = () => {
           )}
           <p className="video-player-name">{name} (You)</p>
         </div>
-        <div className="video-player mr-2 ml-1">
+        <div className="video-player mr-sm-2 ml-sm-1 my-3 my-sm-0">
           {callAccepted && !callEnded && (
             <video
               playsInline
@@ -59,12 +65,28 @@ const VideoPlayer = () => {
       </div>
       <div className="callRoom-footer">
         <button
+          className={`callRoom-footer-button ${
+            micOff ? "callRoom-buttons-off" : "callRoom-buttons-on"
+          }`}
+          onClick={() => setMicOff(!micOff)}
+        >
+          {micOff ? <MicOffIcon /> : <MicIcon />}
+        </button>
+        <button
           onClick={() => {
             setConfirmationModal(true);
           }}
-          className="endCall-button"
+          className="callRoom-footer-button endCall-button"
         >
           <CallEndRoundedIcon />
+        </button>
+        <button
+          className={`callRoom-footer-button ${
+            videoOff ? "callRoom-buttons-off" : "callRoom-buttons-on"
+          }`}
+          onClick={() => setVideoOff(!videoOff)}
+        >
+          {videoOff ? <VideocamOffOutlinedIcon /> : <VideocamOutlinedIcon />}
         </button>
       </div>
       <DialogNotification

@@ -6,7 +6,7 @@ import CallReceivingNotification from "./CallReceivingNotification";
 import CallOutgoingNotification from "./CallOutgoingNotification";
 import { SocketContext } from "../Context";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
-import CallIcon from "@material-ui/icons/Call";
+import VideoCallIcon from "@material-ui/icons/VideoCall";
 
 const OptionsProvider = () => {
   const {
@@ -32,7 +32,7 @@ const OptionsProvider = () => {
     <div className="d-sm-flex justify-content-between align-items-center">
       <div className="w-sm-50 w-100 separator py-sm-5">
         <div className="col-sm-8 mx-auto">
-          <h4 className="options-heading grey-text text-center mb-5">
+          <h4 className="options-heading grey-text text-center pb-5">
             Call a user by specifying their ID
           </h4>
           <form
@@ -65,7 +65,8 @@ const OptionsProvider = () => {
               />
             </div>
             <button type="submit" className="callButton">
-              <CallIcon fontSize="small" style={{ margin: "0" }} /> Call User
+              <VideoCallIcon fontSize="small" style={{ margin: "0" }} /> Call
+              User
             </button>
 
             <hr className="my-5" />
@@ -73,7 +74,7 @@ const OptionsProvider = () => {
         </div>
       </div>
       {/* <div className="d-none d-sm-block headerDivider p-5"></div> */}
-      <div className="w-sm-50 w-100 text-center mb-5 mb-sm-0">
+      <div className="w-sm-50 w-100 text-center pb-5 pb-sm-0">
         <div className="col-sm-8 mx-auto">
           <h4 className="options-heading grey-text text-center mb-5">
             Copy your id and provide it to the person you are trying to
