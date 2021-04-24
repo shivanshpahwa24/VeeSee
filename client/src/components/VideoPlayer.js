@@ -18,9 +18,9 @@ const VideoPlayer = () => {
     callEnded,
     setCallEnded,
     stream,
+    setStream,
     me,
     call,
-    getUserMedia,
     leaveCall,
     nameOfCalledUser,
   } = useContext(SocketContext);
@@ -35,8 +35,14 @@ const VideoPlayer = () => {
   };
 
   useEffect(() => {
-    getUserMedia();
-  }, []);
+    navigator.mediaDevices
+      .getUserMedia({ video: true, audio: true })
+      .then((currentStream) => {
+        setStream(currentStream);
+
+        myVideo.current.srcObject = currentStream;
+      });
+  }, [myVideo, setStream]);
 
   return (
     <div className="callRoom">

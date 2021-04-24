@@ -41,8 +41,6 @@ const ContextProvider = ({ children }) => {
   }, []);
 
   const answerCall = () => {
-    setCallAccepted(true);
-
     const peer = new Peer({ initiator: false, trickle: false, stream });
 
     peer.on("signal", (data) => {
@@ -60,7 +58,7 @@ const ContextProvider = ({ children }) => {
     peer.signal(call.signal);
 
     connectionRef.current = peer;
-    console.log(connectionRef);
+    setCallAccepted(true);
   };
 
   const callUser = (id) => {
@@ -81,9 +79,9 @@ const ContextProvider = ({ children }) => {
     });
 
     socket.on("callAccepted", (signal, myName) => {
-      setCallAccepted(true);
       setNameOfCalledUser(myName);
       peer.signal(signal);
+      setCallAccepted(true);
     });
 
     connectionRef.current = peer;
@@ -93,15 +91,7 @@ const ContextProvider = ({ children }) => {
     connectionRef.current.destroy();
   };
 
-  const getUserMedia = () => {
-    navigator.mediaDevices
-      .getUserMedia({ video: true, audio: true })
-      .then((currentStream) => {
-        setStream(currentStream);
-
-        myVideo.current.srcObject = currentStream;
-      });
-  };
+  const getUserMedia = () => {};
 
   return (
     <SocketContext.Provider
@@ -124,6 +114,7 @@ const ContextProvider = ({ children }) => {
         setCalling,
         setMe,
         nameOfCalledUser,
+        setStream,
       }}
     >
       {children}

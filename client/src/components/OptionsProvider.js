@@ -18,6 +18,7 @@ const OptionsProvider = () => {
     call,
     calling,
     setMe,
+    userVideo,
   } = useContext(SocketContext);
   const [idToCall, setIdToCall] = useState("");
   const [nameForCall, setNameForCall] = useState("");
@@ -77,7 +78,7 @@ const OptionsProvider = () => {
       </div>
       {/* <div className="d-none d-sm-block headerDivider p-5"></div> */}
       <div className="w-sm-50 w-100 pb-5 pb-sm-0">
-        <div className="col-sm-8 d-flex flex-column justify-content-center align-items-center">
+        <div className="col-sm-8 d-flex flex-column justify-content-center align-items-center mx-auto">
           <h4 className="options-heading grey-text text-center mb-5">
             Enter your name and then copy your id to provide it to the person
             you are trying to communicate with
@@ -136,7 +137,9 @@ const OptionsProvider = () => {
           setModalOpen={setReceivingModalOpen}
         />
       )}
-      {callAccepted && <Redirect to="/call" />}
+      {callAccepted && userVideo.current !== undefined && (
+        <Redirect to="/call" />
+      )}
     </div>
   );
 };
