@@ -23,14 +23,17 @@ const ContextProvider = ({ children }) => {
   const [stream, setStream] = useState();
   const [name, setName] = useState("");
   const [call, setCall] = useState({});
-  const [me, setMe] = useState("");
-
+  const [me, setMe] = useState({
+    id: "",
+    name: "",
+  });
+  const [nameOfCalledUser, setNameOfCalledUser] = useState("");
   const myVideo = useRef();
   const userVideo = useRef();
   const connectionRef = useRef();
 
   useEffect(() => {
-    socket.on("me", (id) => setMe(id));
+    socket.on("me", (id) => setMe({ ...me, id }));
 
     socket.on("callUser", ({ from, name: callerName, signal }) => {
       setCall({ isReceivingCall: true, from, name: callerName, signal });
@@ -43,7 +46,11 @@ const ContextProvider = ({ children }) => {
     const peer = new Peer({ initiator: false, trickle: false, stream });
 
     peer.on("signal", (data) => {
-      socket.emit("answerCall", { signal: data, to: call.from });
+      socket.emit("answerCall", {
+        signal: data,
+        to: call.from,
+        myName: me.name,
+      });
     });
 
     peer.on("stream", (currentStream) => {
@@ -53,6 +60,7 @@ const ContextProvider = ({ children }) => {
     peer.signal(call.signal);
 
     connectionRef.current = peer;
+    console.log(connectionRef);
   };
 
   const callUser = (id) => {
@@ -63,7 +71,7 @@ const ContextProvider = ({ children }) => {
       socket.emit("callUser", {
         userToCall: id,
         signalData: data,
-        from: me,
+        from: me.id,
         name,
       });
     });
@@ -72,9 +80,9 @@ const ContextProvider = ({ children }) => {
       userVideo.current.srcObject = currentStream;
     });
 
-    socket.on("callAccepted", (signal) => {
+    socket.on("callAccepted", (signal, myName) => {
       setCallAccepted(true);
-
+      setNameOfCalledUser(myName);
       peer.signal(signal);
     });
 
@@ -114,6 +122,8 @@ const ContextProvider = ({ children }) => {
         getUserMedia,
         calling,
         setCalling,
+        setMe,
+        nameOfCalledUser,
       }}
     >
       {children}

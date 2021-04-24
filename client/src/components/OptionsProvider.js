@@ -17,6 +17,7 @@ const OptionsProvider = () => {
     callUser,
     call,
     calling,
+    setMe,
   } = useContext(SocketContext);
   const [idToCall, setIdToCall] = useState("");
   const [nameForCall, setNameForCall] = useState("");
@@ -85,6 +86,7 @@ const OptionsProvider = () => {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
+                setMe({ ...me, name: nameForCall });
                 setIdAlertOpen(true);
               }}
               className="form-inline"
@@ -100,10 +102,10 @@ const OptionsProvider = () => {
                 required
               />
               <CopyToClipboard
-                text={me}
-                onCopy={() => {
+                text={me.id}
+                /* onCopy={() => {
                   setIdAlertOpen(true);
-                }}
+                }} */
               >
                 <button type="submit" className="callButton ml-1">
                   <FileCopyIcon fontSize="small" /> Copy Your ID
@@ -117,7 +119,7 @@ const OptionsProvider = () => {
           anchorOrigin={{ vertical, horizontal }}
           open={idAlertOpen}
           onClose={() => setIdAlertOpen(false)}
-          message={`ID copied : ${me}`}
+          message={`ID copied : ${me.id}`}
           key={vertical + horizontal}
         />
       </div>

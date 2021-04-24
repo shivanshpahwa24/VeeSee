@@ -18,9 +18,11 @@ const VideoPlayer = () => {
     callEnded,
     setCallEnded,
     stream,
+    me,
     call,
     getUserMedia,
     leaveCall,
+    nameOfCalledUser,
   } = useContext(SocketContext);
 
   const [confirmationModal, setConfirmationModal] = useState(false);
@@ -49,7 +51,7 @@ const VideoPlayer = () => {
               className="actualVideo"
             />
           )}
-          <p className="video-player-name">{name} (You)</p>
+          <p className="video-player-name">{name || me.name} (You)</p>
         </div>
         <div className="video-player mr-sm-2 ml-sm-1 my-3 my-sm-0">
           {callAccepted && !callEnded && (
@@ -60,7 +62,7 @@ const VideoPlayer = () => {
               className="actualVideo"
             />
           )}
-          <p className="video-player-name">{call.name}</p>
+          <p className="video-player-name">{call.name || nameOfCalledUser}</p>
         </div>
       </div>
       <div className="callRoom-footer">
