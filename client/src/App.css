@@ -15,19 +15,17 @@
 
 body {
   font-family: "Roboto", sans-serif;
-} /*
-.landing {
-   
   background: url("./assets/bg.svg");
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-size: cover; 
-}*/
+  background-size: cover;
+}
 .navbar {
   height: 8vh;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: white;
   color: var(--dark-color-a);
   font-size: 1.1rem;
 }
@@ -47,7 +45,7 @@ body {
   border-radius: 2px;
 }
 .landing-text {
-  padding: 5rem 0 8rem 0;
+  margin: 6rem 0 5rem 0;
   color: var(--dark-color-c);
 }
 
@@ -107,6 +105,10 @@ body {
   cursor: pointer;
 }
 @media (max-width: 576px) {
+  body {
+    background: url("./assets/bg.svg");
+    background-size: 105rem;
+  }
   .navbar {
     font-size: 0.9rem;
   }
@@ -115,7 +117,7 @@ body {
   }
   .landing-text {
     font-size: 0.9rem;
-    padding-bottom: 5rem;
+    margin: 4rem 0 5rem 0;
   }
   .landing-text h1 {
     font-size: 1.9rem;
