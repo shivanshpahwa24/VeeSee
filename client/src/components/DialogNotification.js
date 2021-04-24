@@ -25,11 +25,13 @@ const DialogNotification = ({
         disableBackdropClick={true}
       >
         <DialogTitle id="alert-dialog-slide-title">{dialogTitle}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            {dialogText}
-          </DialogContentText>
-        </DialogContent>
+        {dialogText && (
+          <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description">
+              {dialogText}
+            </DialogContentText>
+          </DialogContent>
+        )}
         <DialogActions>{children}</DialogActions>
       </Dialog>
     </>
