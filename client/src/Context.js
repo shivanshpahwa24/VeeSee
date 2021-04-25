@@ -38,7 +38,7 @@ const ContextProvider = ({ children }) => {
     socket.on("callUser", ({ from, name: callerName, signal }) => {
       setCall({ isReceivingCall: true, from, name: callerName, signal });
     });
-  }, []);
+  }, [me]);
 
   const answerCall = () => {
     const peer = new Peer({ initiator: false, trickle: false, stream });
@@ -91,8 +91,6 @@ const ContextProvider = ({ children }) => {
     connectionRef.current.destroy();
   };
 
-  const getUserMedia = () => {};
-
   return (
     <SocketContext.Provider
       value={{
@@ -109,7 +107,6 @@ const ContextProvider = ({ children }) => {
         callUser,
         leaveCall,
         answerCall,
-        getUserMedia,
         calling,
         setCalling,
         setMe,

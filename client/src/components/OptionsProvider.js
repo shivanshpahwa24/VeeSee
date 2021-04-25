@@ -137,7 +137,7 @@ const OptionsProvider = () => {
           setModalOpen={setReceivingModalOpen}
         />
       )}
-      {callAccepted && userVideo.current !== undefined && (
+      {callAccepted /* && userVideo.current !== undefined */ && (
         <Redirect to="/call" />
       )}
     </div>
