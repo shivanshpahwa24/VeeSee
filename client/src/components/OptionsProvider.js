@@ -3,6 +3,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import Snackbar from "@material-ui/core/Snackbar";
 import CallReceivingNotification from "./CallReceivingNotification";
 import CallOutgoingNotification from "./CallOutgoingNotification";
+import CallEndedNotification from "./CallEndedNotification";
 import { SocketContext } from "../Context";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import VideoCallIcon from "@material-ui/icons/VideoCall";
@@ -14,6 +15,7 @@ const OptionsProvider = () => {
     name,
     setName,
     callUser,
+    callEnded,
     call,
     calling,
     setMe,
@@ -133,6 +135,12 @@ const OptionsProvider = () => {
           setModalOpen={setReceivingModalOpen}
         />
       )}
+      {/* {callEnded && (
+        <CallEndedNotification
+          modalOpen={receivingModalOpen}
+          setModalOpen={setReceivingModalOpen}
+        />
+      )} */}
     </div>
   );
 };

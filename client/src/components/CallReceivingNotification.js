@@ -23,6 +23,7 @@ const CallReceivingNotification = ({ modalOpen, setModalOpen }) => {
         <Button
           onClick={() => {
             setCalling(false);
+
             handleClose();
           }}
           color="secondary"

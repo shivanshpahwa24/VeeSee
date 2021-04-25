@@ -22,7 +22,7 @@ const ContextProvider = ({ children }) => {
   const [callEnded, setCallEnded] = useState(true);
   const [stream, setStream] = useState();
   const [userStream, setUserStream] = useState();
-
+  const [callRejected, setCallRejected] = useState(true);
   const [name, setName] = useState("");
   const [call, setCall] = useState({});
   const [me, setMe] = useState({
@@ -133,6 +133,7 @@ const ContextProvider = ({ children }) => {
     <SocketContext.Provider
       value={{
         call,
+
         callAccepted,
         myVideo,
         stream,
@@ -153,6 +154,8 @@ const ContextProvider = ({ children }) => {
         userStream,
         renderLanding,
         renderCall,
+        callRejected,
+        setCallRejected,
       }}
     >
       {children}
