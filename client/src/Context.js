@@ -25,6 +25,9 @@ const ContextProvider = ({ children }) => {
   const [callRejected, setCallRejected] = useState(true);
   const [name, setName] = useState("");
   const [call, setCall] = useState({});
+  const [audioMuted, setAudioMuted] = useState(false);
+  const [videoMuted, setVideoMuted] = useState(false);
+
   const [me, setMe] = useState({
     id: "",
     name: "",
@@ -129,11 +132,24 @@ const ContextProvider = ({ children }) => {
       });
   };
 
+  const toggleMuteAudio = () => {
+    if (stream) {
+      setAudioMuted(!audioMuted);
+      stream.getAudioTracks()[0].enabled = audioMuted;
+    }
+  };
+
+  const toggleMuteVideo = () => {
+    if (stream) {
+      setVideoMuted(!videoMuted);
+      stream.getVideoTracks()[0].enabled = videoMuted;
+    }
+  };
+
   return (
     <SocketContext.Provider
       value={{
         call,
-
         callAccepted,
         myVideo,
         stream,
@@ -156,6 +172,10 @@ const ContextProvider = ({ children }) => {
         renderCall,
         callRejected,
         setCallRejected,
+        toggleMuteVideo,
+        toggleMuteAudio,
+        audioMuted,
+        videoMuted,
       }}
     >
       {children}

@@ -16,18 +16,18 @@ const VideoPlayer = () => {
     callEnded,
     setCallEnded,
     stream,
-    setStream,
     userVideo,
     me,
     call,
     leaveCall,
     nameOfCalledUser,
+    audioMuted,
+    videoMuted,
+    toggleMuteVideo,
+    toggleMuteAudio,
   } = useContext(SocketContext);
 
   const [confirmationModal, setConfirmationModal] = useState(false);
-
-  const [micOff, setMicOff] = useState(false);
-  const [videoOff, setVideoOff] = useState(false);
 
   const handleModalClose = () => {
     setConfirmationModal(false);
@@ -69,11 +69,11 @@ const VideoPlayer = () => {
       <div className="callRoom-footer">
         <button
           className={`callRoom-footer-button ${
-            micOff ? "callRoom-buttons-off" : "callRoom-buttons-on"
+            audioMuted ? "callRoom-buttons-off" : "callRoom-buttons-on"
           }`}
-          onClick={() => setMicOff(!micOff)}
+          onClick={toggleMuteAudio}
         >
-          {micOff ? <MicOffIcon /> : <MicIcon />}
+          {audioMuted ? <MicOffIcon /> : <MicIcon />}
         </button>
         <button
           onClick={() => {
@@ -85,11 +85,11 @@ const VideoPlayer = () => {
         </button>
         <button
           className={`callRoom-footer-button ${
-            videoOff ? "callRoom-buttons-off" : "callRoom-buttons-on"
+            videoMuted ? "callRoom-buttons-off" : "callRoom-buttons-on"
           }`}
-          onClick={() => setVideoOff(!videoOff)}
+          onClick={toggleMuteVideo}
         >
-          {videoOff ? <VideocamOffOutlinedIcon /> : <VideocamOutlinedIcon />}
+          {videoMuted ? <VideocamOffOutlinedIcon /> : <VideocamOutlinedIcon />}
         </button>
       </div>
       <DialogNotification

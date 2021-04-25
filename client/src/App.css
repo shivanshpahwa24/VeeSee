@@ -90,11 +90,11 @@ body {
   margin: 0.5rem;
 }
 .endCall-button {
-  color: red;
+  color: rgb(182, 0, 0);
   background: white;
 }
 .callRoom-buttons-off {
-  background: red;
+  background: rgb(182, 0, 0);
   color: white;
 }
 .callRoom-buttons-on {
