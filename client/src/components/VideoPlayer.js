@@ -18,7 +18,7 @@ const VideoPlayer = () => {
     setCallEnded,
     stream,
     setStream,
-    userStream,
+    userVideo,
     me,
     call,
     leaveCall,
@@ -29,7 +29,6 @@ const VideoPlayer = () => {
   const history = useHistory();
   const [micOff, setMicOff] = useState(false);
   const [videoOff, setVideoOff] = useState(false);
-  const userVideo = useRef();
 
   const handleModalClose = () => {
     setConfirmationModal(false);
@@ -43,9 +42,6 @@ const VideoPlayer = () => {
 
         myVideo.current.srcObject = currentStream;
       });
-
-    userVideo.current.srcObject = userStream;
-    console.log(userVideo);
   }, [myVideo, setStream]);
 
   return (
@@ -54,6 +50,7 @@ const VideoPlayer = () => {
         <div className="video-player mr-sm-1 ml-sm-2 mt-3 mt-sm-0">
           {stream && (
             <video
+              id="myVideo"
               playsInline
               muted
               ref={myVideo}
@@ -66,6 +63,7 @@ const VideoPlayer = () => {
         <div className="video-player mr-sm-2 ml-sm-1 my-3 my-sm-0">
           {callAccepted && !callEnded && (
             <video
+              id="userVideo"
               playsInline
               ref={userVideo}
               autoPlay

@@ -14,7 +14,7 @@ if (process.env.NODE_ENV === "production") {
   ENDPOINT = "https://veesee.herokuapp.com/";
 }
 
-const socket = io(ENDPOINT);
+let socket;
 
 const ContextProvider = ({ children }) => {
   const [callAccepted, setCallAccepted] = useState(false);
@@ -31,8 +31,19 @@ const ContextProvider = ({ children }) => {
   });
   const [nameOfCalledUser, setNameOfCalledUser] = useState("");
   const myVideo = useRef();
+  const userVideo = useRef();
   const connectionRef = useRef();
 
+  useEffect(() => {
+    socket = io(ENDPOINT);
+    return () => {
+      return () => {
+        socket.emit("disconnect");
+
+        socket.close();
+      };
+    };
+  }, []);
   useEffect(() => {
     socket.on("me", (id) => setMe({ ...me, id }));
 
@@ -53,7 +64,8 @@ const ContextProvider = ({ children }) => {
     });
 
     peer.on("stream", (currentStream) => {
-      setUserStream(currentStream);
+      /* setUserStream(currentStream); */
+      userVideo.current.srcObject = currentStream;
     });
 
     peer.signal(call.signal);
@@ -75,7 +87,8 @@ const ContextProvider = ({ children }) => {
       });
     });
     peer.on("stream", (currentStream) => {
-      setUserStream(currentStream);
+      /* setUserStream(currentStream); */
+      userVideo.current.srcObject = currentStream;
     });
     socket.on("callAccepted", (signal, myName) => {
       setNameOfCalledUser(myName);
@@ -108,6 +121,7 @@ const ContextProvider = ({ children }) => {
         calling,
         setCalling,
         setMe,
+        userVideo,
         nameOfCalledUser,
         setStream,
         userStream,
