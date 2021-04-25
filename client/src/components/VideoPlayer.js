@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import CallEndRoundedIcon from "@material-ui/icons/CallEndRounded";
 import { SocketContext } from "../Context";
@@ -14,11 +14,11 @@ const VideoPlayer = () => {
     name,
     callAccepted,
     myVideo,
-    userVideo,
     callEnded,
     setCallEnded,
     stream,
     setStream,
+    userStream,
     me,
     call,
     leaveCall,
@@ -29,6 +29,7 @@ const VideoPlayer = () => {
   const history = useHistory();
   const [micOff, setMicOff] = useState(false);
   const [videoOff, setVideoOff] = useState(false);
+  const userVideo = useRef();
 
   const handleModalClose = () => {
     setConfirmationModal(false);
@@ -42,6 +43,9 @@ const VideoPlayer = () => {
 
         myVideo.current.srcObject = currentStream;
       });
+
+    userVideo.current.srcObject = userStream;
+    console.log(userVideo);
   }, [myVideo, setStream]);
 
   return (

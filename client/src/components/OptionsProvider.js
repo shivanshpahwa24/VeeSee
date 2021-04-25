@@ -18,7 +18,6 @@ const OptionsProvider = () => {
     call,
     calling,
     setMe,
-    userVideo,
   } = useContext(SocketContext);
   const [idToCall, setIdToCall] = useState("");
   const [nameForCall, setNameForCall] = useState("");
@@ -102,12 +101,7 @@ const OptionsProvider = () => {
                 type="text"
                 required
               />
-              <CopyToClipboard
-                text={me.id}
-                /* onCopy={() => {
-                  setIdAlertOpen(true);
-                }} */
-              >
+              <CopyToClipboard text={me.id}>
                 <button type="submit" className="callButton ml-1">
                   <FileCopyIcon fontSize="small" /> Copy Your ID
                 </button>
@@ -137,9 +131,7 @@ const OptionsProvider = () => {
           setModalOpen={setReceivingModalOpen}
         />
       )}
-      {callAccepted /* && userVideo.current !== undefined */ && (
-        <Redirect to="/call" />
-      )}
+      {callAccepted && <Redirect to="/call" />}
     </div>
   );
 };
