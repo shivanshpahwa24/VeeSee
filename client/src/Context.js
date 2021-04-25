@@ -19,7 +19,7 @@ let socket;
 const ContextProvider = ({ children }) => {
   const [callAccepted, setCallAccepted] = useState(false);
   const [calling, setCalling] = useState(false);
-  const [callEnded, setCallEnded] = useState(false);
+  const [callEnded, setCallEnded] = useState(true);
   const [stream, setStream] = useState();
   const [userStream, setUserStream] = useState();
 
@@ -36,12 +36,13 @@ const ContextProvider = ({ children }) => {
 
   useEffect(() => {
     socket = io(ENDPOINT);
-    return () => {
-      return () => {
-        socket.emit("disconnect");
 
-        socket.close();
-      };
+    getmyVideo();
+
+    return () => {
+      socket.emit("disconnect");
+
+      socket.close();
     };
   }, []);
   useEffect(() => {
@@ -53,6 +54,8 @@ const ContextProvider = ({ children }) => {
   }, [me]);
 
   const answerCall = () => {
+    setCallAccepted(true);
+    setCallEnded(false);
     const peer = new Peer({ initiator: false, trickle: false, stream });
 
     peer.on("signal", (data) => {
@@ -64,14 +67,12 @@ const ContextProvider = ({ children }) => {
     });
 
     peer.on("stream", (currentStream) => {
-      /* setUserStream(currentStream); */
       userVideo.current.srcObject = currentStream;
     });
 
     peer.signal(call.signal);
 
     connectionRef.current = peer;
-    setCallAccepted(true);
   };
 
   const callUser = (id) => {
@@ -87,12 +88,14 @@ const ContextProvider = ({ children }) => {
       });
     });
     peer.on("stream", (currentStream) => {
-      /* setUserStream(currentStream); */
-      userVideo.current.srcObject = currentStream;
+      if (userVideo.current) {
+        userVideo.current.srcObject = currentStream;
+      }
     });
     socket.on("callAccepted", (signal, myName) => {
       setNameOfCalledUser(myName);
       peer.signal(signal);
+      setCallEnded(false);
       setCallAccepted(true);
     });
 
@@ -101,6 +104,29 @@ const ContextProvider = ({ children }) => {
 
   const leaveCall = () => {
     connectionRef.current.destroy();
+    setCallEnded(true);
+    window.location.reload();
+  };
+
+  const renderLanding = () => {
+    if (!callAccepted && callEnded) return "block";
+    return "none";
+  };
+
+  const renderCall = () => {
+    if (!callAccepted && callEnded) return "none";
+    return "block";
+  };
+
+  const getmyVideo = () => {
+    navigator.mediaDevices
+      .getUserMedia({ video: true, audio: true })
+      .then((thisStream) => {
+        setStream(thisStream);
+        if (myVideo.current) {
+          myVideo.current.srcObject = thisStream;
+        }
+      });
   };
 
   return (
@@ -125,6 +151,8 @@ const ContextProvider = ({ children }) => {
         nameOfCalledUser,
         setStream,
         userStream,
+        renderLanding,
+        renderCall,
       }}
     >
       {children}

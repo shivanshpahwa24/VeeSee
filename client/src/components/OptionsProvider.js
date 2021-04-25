@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import { Redirect } from "react-router-dom";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Snackbar from "@material-ui/core/Snackbar";
 import CallReceivingNotification from "./CallReceivingNotification";
@@ -88,6 +87,9 @@ const OptionsProvider = () => {
                 e.preventDefault();
                 setMe({ ...me, name: nameForCall });
                 setIdAlertOpen(true);
+                /* setInterval(() => {
+                  setIdAlertOpen(false);
+                }, 1000); */
               }}
               className="form-inline"
             >
@@ -131,7 +133,6 @@ const OptionsProvider = () => {
           setModalOpen={setReceivingModalOpen}
         />
       )}
-      {callAccepted && <Redirect to="/call" />}
     </div>
   );
 };

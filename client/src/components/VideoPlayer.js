@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
 import CallEndRoundedIcon from "@material-ui/icons/CallEndRounded";
 import { SocketContext } from "../Context";
 import DialogNotification from "./DialogNotification";
@@ -26,23 +25,17 @@ const VideoPlayer = () => {
   } = useContext(SocketContext);
 
   const [confirmationModal, setConfirmationModal] = useState(false);
-  const history = useHistory();
+
   const [micOff, setMicOff] = useState(false);
   const [videoOff, setVideoOff] = useState(false);
 
   const handleModalClose = () => {
     setConfirmationModal(false);
   };
-
+  /* 
   useEffect(() => {
-    navigator.mediaDevices
-      .getUserMedia({ video: true, audio: true })
-      .then((currentStream) => {
-        setStream(currentStream);
-
-        myVideo.current.srcObject = currentStream;
-      });
-  }, [myVideo, setStream]);
+    
+  }, [myVideo, setStream]); */
 
   return (
     <div className="callRoom">
@@ -106,9 +99,7 @@ const VideoPlayer = () => {
       >
         <Button
           onClick={() => {
-            history.push("/");
             leaveCall();
-            setCallEnded(true);
           }}
           color="primary"
         >
@@ -118,7 +109,6 @@ const VideoPlayer = () => {
           No
         </Button>
       </DialogNotification>
-      {callEnded && <Redirect to="/" />}
     </div>
   );
 };

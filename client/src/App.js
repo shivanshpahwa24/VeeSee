@@ -1,23 +1,23 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React, { useContext } from "react";
 import "./App.css";
 import Landing from "./components/Landing";
 import VideoPlayer from "./components/VideoPlayer";
 import Navbar from "./components/Navbar";
-import { ContextProvider } from "./Context";
 import "bootstrap/dist/css/bootstrap.css";
+import { SocketContext } from "./Context";
 
 const App = () => {
+  const { renderLanding, renderCall } = useContext(SocketContext);
   return (
-    <ContextProvider>
-      <Router>
-        <Navbar />
-        <Switch>
-          <Route exact path="/" component={Landing} />
-          <Route exact path="/call" component={VideoPlayer} />
-        </Switch>
-      </Router>
-    </ContextProvider>
+    <>
+      <Navbar />
+      <div style={{ display: renderLanding() }}>
+        <Landing />
+      </div>
+      <div style={{ display: renderCall() }}>
+        <VideoPlayer />
+      </div>
+    </>
   );
 };
 

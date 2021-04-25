@@ -1,12 +1,10 @@
-import React, { useContext, useState } from "react";
-import { Redirect } from "react-router-dom";
+import React, { useContext } from "react";
 import Button from "@material-ui/core/Button";
 import DialogNotification from "./DialogNotification";
 import { SocketContext } from "../Context";
 
 const CallReceivingNotification = ({ modalOpen, setModalOpen }) => {
   const { answerCall, call, setCalling } = useContext(SocketContext);
-  const [callAnswered, setCallAnswered] = useState(false);
 
   const handleClose = () => {
     setModalOpen(false);
@@ -17,7 +15,6 @@ const CallReceivingNotification = ({ modalOpen, setModalOpen }) => {
         <Button
           onClick={() => {
             answerCall();
-            setCallAnswered(true);
           }}
           color="primary"
         >
@@ -46,7 +43,6 @@ const CallReceivingNotification = ({ modalOpen, setModalOpen }) => {
       >
         <CallAction />
       </DialogNotification>
-      {callAnswered && <Redirect to="/call" />}
     </>
   );
 };
