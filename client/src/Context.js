@@ -19,7 +19,8 @@ let socket;
 const ContextProvider = ({ children }) => {
   const [callAccepted, setCallAccepted] = useState(false);
   const [calling, setCalling] = useState(false);
-  const [callEnded, setCallEnded] = useState(true);
+  const [callEnded, setCallEnded] = useState(false);
+  const [noCall, setNoCall] = useState(true);
   const [stream, setStream] = useState();
   const [userStream, setUserStream] = useState();
   const [callRejected, setCallRejected] = useState(true);
@@ -33,6 +34,7 @@ const ContextProvider = ({ children }) => {
     name: "",
   });
   const [nameOfCalledUser, setNameOfCalledUser] = useState("");
+  const [idOfOtherUser, setIdOfOtherUser] = useState("");
   const myVideo = useRef();
   const userVideo = useRef();
   const connectionRef = useRef();
@@ -58,7 +60,7 @@ const ContextProvider = ({ children }) => {
 
   const answerCall = () => {
     setCallAccepted(true);
-    setCallEnded(false);
+    setNoCall(false);
     const peer = new Peer({ initiator: false, trickle: false, stream });
 
     peer.on("signal", (data) => {
@@ -68,9 +70,17 @@ const ContextProvider = ({ children }) => {
         myName: me.name,
       });
     });
-
+    setIdOfOtherUser(call.from);
     peer.on("stream", (currentStream) => {
       userVideo.current.srcObject = currentStream;
+    });
+    peer.on("error", (err) => {
+      leaveCall();
+    });
+
+    socket.on("close", () => {
+      window.location.reload();
+      setCallEnded(true);
     });
 
     peer.signal(call.signal);
@@ -80,6 +90,7 @@ const ContextProvider = ({ children }) => {
 
   const callUser = (id) => {
     setCalling(true);
+    setIdOfOtherUser(id);
     const peer = new Peer({ initiator: true, trickle: false, stream });
 
     peer.on("signal", (data) => {
@@ -95,29 +106,42 @@ const ContextProvider = ({ children }) => {
         userVideo.current.srcObject = currentStream;
       }
     });
+    peer.on("error", (err) => {
+      leaveCall();
+    });
     socket.on("callAccepted", (signal, myName) => {
       setNameOfCalledUser(myName);
       peer.signal(signal);
-      setCallEnded(false);
+      setNoCall(false);
       setCallAccepted(true);
+    });
+    socket.on("close", () => {
+      window.location.reload();
+      setCallEnded(true);
+    });
+
+    socket.on("rejected", () => {
+      window.location.reload();
     });
 
     connectionRef.current = peer;
   };
 
   const leaveCall = () => {
+    socket.emit("close", { to: idOfOtherUser });
+
     connectionRef.current.destroy();
     setCallEnded(true);
     window.location.reload();
   };
 
   const renderLanding = () => {
-    if (!callAccepted && callEnded) return "block";
+    if (!callAccepted && noCall) return "block";
     return "none";
   };
 
   const renderCall = () => {
-    if (!callAccepted && callEnded) return "none";
+    if (!callAccepted && noCall) return "none";
     return "block";
   };
 

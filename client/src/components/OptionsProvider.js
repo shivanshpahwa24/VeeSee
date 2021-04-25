@@ -135,12 +135,12 @@ const OptionsProvider = () => {
           setModalOpen={setReceivingModalOpen}
         />
       )}
-      {/* {callEnded && (
+      {callEnded && (
         <CallEndedNotification
           modalOpen={receivingModalOpen}
           setModalOpen={setReceivingModalOpen}
         />
-      )} */}
+      )}
     </div>
   );
 };

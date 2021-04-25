@@ -25,11 +25,20 @@ io.on("connection", (socket) => {
   });
 
   socket.on("callUser", ({ userToCall, signalData, from, name }) => {
+    //from -> id
     io.to(userToCall).emit("callUser", { signal: signalData, from, name });
   });
 
   socket.on("answerCall", ({ signal, to, myName }) => {
     io.to(to).emit("callAccepted", signal, myName);
+  });
+
+  socket.on("close", (data) => {
+    io.to(data.to).emit("close");
+  });
+
+  socket.on("rejected", (data) => {
+    io.to(data.to).emit("rejected");
   });
 });
 
