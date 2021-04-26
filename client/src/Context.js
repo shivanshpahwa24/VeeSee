@@ -4,18 +4,6 @@ import Peer from "simple-peer";
 
 const SocketContext = createContext();
 
-let ENDPOINT;
-
-if (process.env.NODE_ENV === "development") {
-  ENDPOINT = "http://localhost:5000";
-}
-
-if (process.env.NODE_ENV === "production") {
-  ENDPOINT = "https://veesee.herokuapp.com/";
-}
-
-let socket;
-
 const ContextProvider = ({ children }) => {
   const [callAccepted, setCallAccepted] = useState(false);
   const [calling, setCalling] = useState(false);
@@ -38,22 +26,23 @@ const ContextProvider = ({ children }) => {
   const myVideo = useRef();
   const userVideo = useRef();
   const connectionRef = useRef();
+  const socket = useRef();
 
   useEffect(() => {
-    socket = io(ENDPOINT);
+    socket.current = io.connect("/");
 
     getmyVideo();
 
     return () => {
-      socket.emit("disconnect");
+      socket.current.emit("disconnect");
 
-      socket.close();
+      socket.current.close();
     };
   }, []);
   useEffect(() => {
-    socket.on("me", (id) => setMe({ ...me, id }));
+    socket.current.on("me", (id) => setMe({ ...me, id }));
 
-    socket.on("callUser", ({ from, name: callerName, signal }) => {
+    socket.current.on("callUser", ({ from, name: callerName, signal }) => {
       setCall({ isReceivingCall: true, from, name: callerName, signal });
     });
   }, [me]);
@@ -66,7 +55,7 @@ const ContextProvider = ({ children }) => {
     connectionRef.current = peer;
 
     peer.on("signal", (data) => {
-      socket.emit("answerCall", {
+      socket.current.emit("answerCall", {
         signal: data,
         to: call.from,
         myName: me.name,
@@ -80,7 +69,7 @@ const ContextProvider = ({ children }) => {
       leaveCall();
     });
 
-    socket.on("close", () => {
+    socket.current.on("close", () => {
       setCallEnded(true);
       setTimeout(() => {
         window.location.reload();
@@ -97,7 +86,7 @@ const ContextProvider = ({ children }) => {
     connectionRef.current = peer;
 
     peer.on("signal", (data) => {
-      socket.emit("callUser", {
+      socket.current.emit("callUser", {
         userToCall: id,
         signalData: data,
         from: me.id,
@@ -113,20 +102,20 @@ const ContextProvider = ({ children }) => {
       leaveCall();
     });
 
-    socket.on("callAccepted", (signal, myName) => {
+    socket.current.on("callAccepted", (signal, myName) => {
       setNameOfCalledUser(myName);
       peer.signal(signal);
       setNoCall(false);
       setCallAccepted(true);
     });
-    socket.on("close", () => {
+    socket.current.on("close", () => {
       setCallEnded(true);
       setTimeout(() => {
         window.location.reload();
       }, 2000);
     });
 
-    socket.on("rejected", () => {
+    socket.current.on("rejected", () => {
       setCallRejected(true);
       setTimeout(() => {
         window.location.reload();
@@ -135,7 +124,7 @@ const ContextProvider = ({ children }) => {
   };
 
   const leaveCall = () => {
-    socket.emit("close", { to: idOfOtherUser });
+    socket.current.emit("close", { to: idOfOtherUser });
 
     connectionRef.current.destroy();
     setCallEnded(true);
@@ -145,7 +134,7 @@ const ContextProvider = ({ children }) => {
   };
 
   const rejectCall = () => {
-    socket.emit("rejected", { to: idOfOtherUser });
+    socket.current.emit("rejected", { to: idOfOtherUser });
 
     setTimeout(() => {
       window.location.reload();
