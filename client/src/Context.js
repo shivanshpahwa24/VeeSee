@@ -29,6 +29,7 @@ const ContextProvider = ({ children }) => {
   const userVideo = useRef();
   const connectionRef = useRef();
   const socket = useRef();
+  const didMountRef = useRef(false);
 
   useEffect(() => {
     socket.current = io.connect("/");
@@ -47,7 +48,13 @@ const ContextProvider = ({ children }) => {
     socket.current.on("callUser", ({ from, name: callerName, signal }) => {
       setCall({ isReceivingCall: true, from, name: callerName, signal });
     });
-  }, [me]);
+    socket.current.on("audioMuted", () => {
+      setUserAudioMuted(!userAudioMuted);
+    });
+    socket.current.on("videoMuted", () => {
+      setUserVideoMuted(!userVideoMuted);
+    });
+  }, [me, userAudioMuted, userVideoMuted]);
 
   const answerCall = () => {
     setCallAccepted(true);
@@ -122,13 +129,6 @@ const ContextProvider = ({ children }) => {
       setTimeout(() => {
         window.location.reload();
       }, 2000);
-    });
-
-    socket.current.on("audioMuted", () => {
-      setUserAudioMuted(!userAudioMuted);
-    });
-    socket.current.on("videoMuted", () => {
-      setUserVideoMuted(!userVideoMuted);
     });
   };
 

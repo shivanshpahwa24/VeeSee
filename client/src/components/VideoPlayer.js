@@ -23,6 +23,8 @@ const VideoPlayer = () => {
     nameOfCalledUser,
     audioMuted,
     videoMuted,
+    userAudioMuted,
+    userVideoMuted,
     toggleMuteVideo,
     toggleMuteAudio,
   } = useContext(SocketContext);
@@ -51,7 +53,14 @@ const VideoPlayer = () => {
               className="actualVideo"
             />
           )}
-          <p className="video-player-name">{name || me.name} (You)</p>
+          <p className="video-player-name">
+            {audioMuted && (
+              <span className="callRoom-buttons-off callRoom-mic-off-icon">
+                <MicOffIcon style={{ fontSize: 16 }} />
+              </span>
+            )}{" "}
+            {name || me.name} (You)
+          </p>
         </div>
         <div className="video-player mr-sm-2 ml-sm-1 my-3 my-sm-0">
           {callAccepted && !callEnded && (
@@ -63,7 +72,14 @@ const VideoPlayer = () => {
               className="actualVideo"
             />
           )}
-          <p className="video-player-name">{call.name || nameOfCalledUser}</p>
+          <p className="video-player-name">
+            {userAudioMuted && (
+              <span className="callRoom-buttons-off callRoom-mic-off-icon">
+                <MicOffIcon style={{ fontSize: 16 }} />
+              </span>
+            )}{" "}
+            {call.name || nameOfCalledUser}
+          </p>
         </div>
       </div>
       <div className="callRoom-footer">
@@ -71,7 +87,7 @@ const VideoPlayer = () => {
           className={`callRoom-footer-button ${
             audioMuted ? "callRoom-buttons-off" : "callRoom-buttons-on"
           }`}
-          onClick={toggleMuteAudio}
+          onClick={() => toggleMuteAudio()}
         >
           {audioMuted ? <MicOffIcon /> : <MicIcon />}
         </button>
@@ -87,7 +103,7 @@ const VideoPlayer = () => {
           className={`callRoom-footer-button ${
             videoMuted ? "callRoom-buttons-off" : "callRoom-buttons-on"
           }`}
-          onClick={toggleMuteVideo}
+          onClick={() => toggleMuteVideo()}
         >
           {videoMuted ? <VideocamOffOutlinedIcon /> : <VideocamOutlinedIcon />}
         </button>

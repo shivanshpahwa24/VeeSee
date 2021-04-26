@@ -90,12 +90,16 @@ body {
   margin: 0.5rem;
 }
 .endCall-button {
-  color: rgb(182, 0, 0);
+  color: rgb(208, 0, 0);
   background: white;
 }
 .callRoom-buttons-off {
-  background: rgb(182, 0, 0);
+  background: rgb(208, 0, 0);
   color: white;
+}
+.callRoom-mic-off-icon {
+  border-radius: 50%;
+  padding: 0.2rem 0.3rem 0.4rem 0.4rem;
 }
 .callRoom-buttons-on {
   background: white;
