@@ -16,6 +16,8 @@ const ContextProvider = ({ children }) => {
   const [call, setCall] = useState({});
   const [audioMuted, setAudioMuted] = useState(false);
   const [videoMuted, setVideoMuted] = useState(false);
+  const [userAudioMuted, setUserAudioMuted] = useState(false);
+  const [userVideoMuted, setUserVideoMuted] = useState(false);
 
   const [me, setMe] = useState({
     id: "",
@@ -121,6 +123,13 @@ const ContextProvider = ({ children }) => {
         window.location.reload();
       }, 2000);
     });
+
+    socket.current.on("audioMuted", () => {
+      setUserAudioMuted(!userAudioMuted);
+    });
+    socket.current.on("videoMuted", () => {
+      setUserVideoMuted(!userVideoMuted);
+    });
   };
 
   const leaveCall = () => {
@@ -166,6 +175,7 @@ const ContextProvider = ({ children }) => {
     if (stream) {
       setAudioMuted(!audioMuted);
       stream.getAudioTracks()[0].enabled = audioMuted;
+      socket.current.emit("audioMuted", { to: idOfOtherUser });
     }
   };
 
@@ -173,6 +183,7 @@ const ContextProvider = ({ children }) => {
     if (stream) {
       setVideoMuted(!videoMuted);
       stream.getVideoTracks()[0].enabled = videoMuted;
+      socket.current.emit("videoMuted", { to: idOfOtherUser });
     }
   };
 
@@ -206,6 +217,8 @@ const ContextProvider = ({ children }) => {
         toggleMuteAudio,
         audioMuted,
         videoMuted,
+        userAudioMuted,
+        userVideoMuted,
         rejectCall,
       }}
     >

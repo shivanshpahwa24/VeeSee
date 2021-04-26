@@ -40,6 +40,14 @@ io.on("connection", (socket) => {
   socket.on("rejected", (data) => {
     io.to(data.to).emit("rejected");
   });
+
+  socket.on("audioMuted", (data) => {
+    io.to(data.to).emit("audioMuted");
+  });
+
+  socket.on("videoMuted", (data) => {
+    io.to(data.to).emit("videoMuted");
+  });
 });
 
 // Serve static assets in production
