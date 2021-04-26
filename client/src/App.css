@@ -101,6 +101,16 @@ body {
   border-radius: 50%;
   padding: 0.2rem 0.3rem 0.4rem 0.4rem;
 }
+.callRoom-video-off-icon {
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(
+    -50%,
+    -50%
+  ); /* It will make the div centered from the center of the parent div */
+}
 .callRoom-buttons-on {
   background: white;
   color: var(--dark-color-a);

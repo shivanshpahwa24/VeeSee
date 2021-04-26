@@ -43,6 +43,11 @@ const VideoPlayer = () => {
     <div className="callRoom">
       <div className="video-player-container d-flex flex-column flex-sm-row justify-content-center align-items-center">
         <div className="video-player mr-sm-1 ml-sm-2 mt-3 mt-sm-0">
+          {videoMuted && (
+            <div className="callRoom-video-off-icon">
+              <VideocamOffOutlinedIcon style={{ fontSize: 50 }} />
+            </div>
+          )}
           {stream && (
             <video
               id="myVideo"
@@ -63,6 +68,11 @@ const VideoPlayer = () => {
           </p>
         </div>
         <div className="video-player mr-sm-2 ml-sm-1 my-3 my-sm-0">
+          {userVideoMuted && (
+            <div className="callRoom-video-off-icon">
+              <VideocamOffOutlinedIcon style={{ fontSize: 50 }} />
+            </div>
+          )}
           {callAccepted && !callEnded && (
             <video
               id="userVideo"

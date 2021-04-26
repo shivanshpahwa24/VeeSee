@@ -29,19 +29,18 @@ const ContextProvider = ({ children }) => {
   const userVideo = useRef();
   const connectionRef = useRef();
   const socket = useRef();
-  const didMountRef = useRef(false);
 
   useEffect(() => {
     socket.current = io.connect("/");
 
     getmyVideo();
-
     return () => {
       socket.current.emit("disconnect");
 
       socket.current.close();
     };
   }, []);
+
   useEffect(() => {
     socket.current.on("me", (id) => setMe({ ...me, id }));
 
