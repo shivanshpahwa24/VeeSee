@@ -127,16 +127,19 @@ body {
     font-weight: normal;
   }
   .separator {
-    border: none;
+    border-right: none;
+    border-bottom: 1px solid #a0a0a0;
   }
   .callButton {
     padding: 0.5rem 2rem;
     font-size: 0.9rem;
   }
-  .options .form-inline .form-control {
-    display: inline-block;
-    width: auto;
-    vertical-align: middle;
+
+  .options .form-inline {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
   .video-player {
     height: 35vh;

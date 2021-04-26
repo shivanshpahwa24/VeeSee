@@ -4,6 +4,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import CallReceivingNotification from "./CallReceivingNotification";
 import CallOutgoingNotification from "./CallOutgoingNotification";
 import CallEndedNotification from "./CallEndedNotification";
+import CallRejectedNotification from "./CallRejectedNotification";
 import { SocketContext } from "../Context";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import VideoCallIcon from "@material-ui/icons/VideoCall";
@@ -12,6 +13,7 @@ const OptionsProvider = () => {
   const {
     me,
     callAccepted,
+    callRejected,
     name,
     setName,
     callUser,
@@ -33,13 +35,13 @@ const OptionsProvider = () => {
   const { vertical, horizontal } = direction;
   return (
     <div className="d-sm-flex justify-content-between align-items-center">
-      <div className="w-sm-50 w-100 separator py-sm-5">
+      <div className="w-sm-50 w-100 separator py-sm-5 ">
         <div className="col-sm-8 mx-auto">
           <h4 className="options-heading grey-text text-center pb-5">
             Call a user by specifying their ID
           </h4>
           <form
-            className="mx-2"
+            className="mx-2 mb-5 mb-sm-0"
             onSubmit={(e) => {
               e.preventDefault();
               callUser(idToCall);
@@ -72,12 +74,12 @@ const OptionsProvider = () => {
               User
             </button>
 
-            <hr className="my-5" />
+            {/*  <hr className="my-5" /> */}
           </form>
         </div>
       </div>
       {/* <div className="d-none d-sm-block headerDivider p-5"></div> */}
-      <div className="w-sm-50 w-100 pb-5 pb-sm-0">
+      <div className="w-sm-50 w-100 pb-5 pb-sm-0 mt-5 mt-sm-0">
         <div className="col-sm-8 d-flex flex-column justify-content-center align-items-center mx-auto">
           <h4 className="options-heading grey-text text-center mb-5">
             Enter your name and then copy your id to provide it to the person
@@ -96,7 +98,7 @@ const OptionsProvider = () => {
               className="form-inline"
             >
               <input
-                className="form-control mr-1"
+                className="form-control mr-sm-1"
                 name="nameForCall"
                 placeholder="Enter your name"
                 value={nameForCall}
@@ -106,7 +108,10 @@ const OptionsProvider = () => {
                 required
               />
               <CopyToClipboard text={me.id}>
-                <button type="submit" className="callButton ml-1">
+                <button
+                  type="submit"
+                  className="callButton ml-sm-1 mt-sm-0 mt-2"
+                >
                   <FileCopyIcon fontSize="small" /> Copy Your ID
                 </button>
               </CopyToClipboard>
@@ -122,11 +127,17 @@ const OptionsProvider = () => {
           key={vertical + horizontal}
         />
       </div>
-      {calling && !callAccepted && (
+      {calling && !callAccepted && !callRejected && (
         <CallOutgoingNotification
           modalOpen={callingModalOpen}
           setModalOpen={setCallingModalOpen}
           id={idToCall}
+        />
+      )}
+      {callRejected && (
+        <CallRejectedNotification
+          modalOpen={callingModalOpen}
+          setModalOpen={setCallingModalOpen}
         />
       )}
       {call.isReceivingCall && !callAccepted && (

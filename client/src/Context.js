@@ -23,7 +23,7 @@ const ContextProvider = ({ children }) => {
   const [noCall, setNoCall] = useState(true);
   const [stream, setStream] = useState();
   const [userStream, setUserStream] = useState();
-  const [callRejected, setCallRejected] = useState(true);
+  const [callRejected, setCallRejected] = useState(false);
   const [name, setName] = useState("");
   const [call, setCall] = useState({});
   const [audioMuted, setAudioMuted] = useState(false);
@@ -63,6 +63,8 @@ const ContextProvider = ({ children }) => {
     setNoCall(false);
     const peer = new Peer({ initiator: false, trickle: false, stream });
 
+    connectionRef.current = peer;
+
     peer.on("signal", (data) => {
       socket.emit("answerCall", {
         signal: data,
@@ -86,14 +88,13 @@ const ContextProvider = ({ children }) => {
     });
 
     peer.signal(call.signal);
-
-    connectionRef.current = peer;
   };
 
   const callUser = (id) => {
     setCalling(true);
     setIdOfOtherUser(id);
     const peer = new Peer({ initiator: true, trickle: false, stream });
+    connectionRef.current = peer;
 
     peer.on("signal", (data) => {
       socket.emit("callUser", {
@@ -111,6 +112,7 @@ const ContextProvider = ({ children }) => {
     peer.on("error", (err) => {
       leaveCall();
     });
+
     socket.on("callAccepted", (signal, myName) => {
       setNameOfCalledUser(myName);
       peer.signal(signal);
@@ -125,10 +127,11 @@ const ContextProvider = ({ children }) => {
     });
 
     socket.on("rejected", () => {
-      window.location.reload();
+      setCallRejected(true);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     });
-
-    connectionRef.current = peer;
   };
 
   const leaveCall = () => {
@@ -136,6 +139,14 @@ const ContextProvider = ({ children }) => {
 
     connectionRef.current.destroy();
     setCallEnded(true);
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
+  };
+
+  const rejectCall = () => {
+    socket.emit("rejected", { to: idOfOtherUser });
+
     setTimeout(() => {
       window.location.reload();
     }, 2000);
@@ -206,6 +217,7 @@ const ContextProvider = ({ children }) => {
         toggleMuteAudio,
         audioMuted,
         videoMuted,
+        rejectCall,
       }}
     >
       {children}
