@@ -79,8 +79,10 @@ const ContextProvider = ({ children }) => {
     });
 
     socket.on("close", () => {
-      window.location.reload();
       setCallEnded(true);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     });
 
     peer.signal(call.signal);
@@ -116,8 +118,10 @@ const ContextProvider = ({ children }) => {
       setCallAccepted(true);
     });
     socket.on("close", () => {
-      window.location.reload();
       setCallEnded(true);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     });
 
     socket.on("rejected", () => {
@@ -132,7 +136,9 @@ const ContextProvider = ({ children }) => {
 
     connectionRef.current.destroy();
     setCallEnded(true);
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   };
 
   const renderLanding = () => {

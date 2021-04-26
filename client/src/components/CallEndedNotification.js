@@ -23,7 +23,7 @@ const CallEndedNotification = ({ modalOpen, setModalOpen }) => {
         handleClose={handleClose}
         modalOpen={modalOpen}
       >
-        <CallAction />
+        {/*  <CallAction /> */}
       </DialogNotification>
     </>
   );
