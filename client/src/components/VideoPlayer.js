@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import CallEndRoundedIcon from "@material-ui/icons/CallEndRounded";
 import { SocketContext } from "../Context";
 import DialogNotification from "./DialogNotification";
@@ -14,7 +14,6 @@ const VideoPlayer = () => {
     callAccepted,
     myVideo,
     callEnded,
-    setCallEnded,
     stream,
     userVideo,
     me,
@@ -43,11 +42,6 @@ const VideoPlayer = () => {
     <div className="callRoom">
       <div className="video-player-container d-flex flex-column flex-sm-row justify-content-center align-items-center">
         <div className="video-player mr-sm-1 ml-sm-2 mt-3 mt-sm-0">
-          {videoMuted && (
-            <div className="callRoom-video-off-icon">
-              <VideocamOffOutlinedIcon style={{ fontSize: 50 }} />
-            </div>
-          )}
           {stream && (
             <video
               id="myVideo"
@@ -57,6 +51,11 @@ const VideoPlayer = () => {
               autoPlay
               className="actualVideo"
             />
+          )}
+          {videoMuted && (
+            <div className="callRoom-video-off-icon">
+              <VideocamOffOutlinedIcon style={{ fontSize: 50 }} />
+            </div>
           )}
           <p className="video-player-name">
             {audioMuted && (
@@ -68,11 +67,6 @@ const VideoPlayer = () => {
           </p>
         </div>
         <div className="video-player mr-sm-2 ml-sm-1 my-3 my-sm-0">
-          {userVideoMuted && (
-            <div className="callRoom-video-off-icon">
-              <VideocamOffOutlinedIcon style={{ fontSize: 50 }} />
-            </div>
-          )}
           {callAccepted && !callEnded && (
             <video
               id="userVideo"
@@ -81,6 +75,11 @@ const VideoPlayer = () => {
               autoPlay
               className="actualVideo"
             />
+          )}
+          {userVideoMuted && (
+            <div className="callRoom-video-off-icon">
+              <VideocamOffOutlinedIcon style={{ fontSize: 50 }} />
+            </div>
           )}
           <p className="video-player-name">
             {userAudioMuted && (
@@ -97,7 +96,7 @@ const VideoPlayer = () => {
           className={`callRoom-footer-button ${
             audioMuted ? "callRoom-buttons-off" : "callRoom-buttons-on"
           }`}
-          onClick={() => toggleMuteAudio()}
+          onClick={toggleMuteAudio}
         >
           {audioMuted ? <MicOffIcon /> : <MicIcon />}
         </button>
@@ -113,7 +112,7 @@ const VideoPlayer = () => {
           className={`callRoom-footer-button ${
             videoMuted ? "callRoom-buttons-off" : "callRoom-buttons-on"
           }`}
-          onClick={() => toggleMuteVideo()}
+          onClick={toggleMuteVideo}
         >
           {videoMuted ? <VideocamOffOutlinedIcon /> : <VideocamOutlinedIcon />}
         </button>

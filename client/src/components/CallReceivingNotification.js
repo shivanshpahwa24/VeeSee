@@ -4,9 +4,7 @@ import DialogNotification from "./DialogNotification";
 import { SocketContext } from "../Context";
 
 const CallReceivingNotification = ({ modalOpen, setModalOpen }) => {
-  const { answerCall, call, setCalling, rejectCall } = useContext(
-    SocketContext
-  );
+  const { answerCall, call, rejectCall } = useContext(SocketContext);
 
   const handleClose = () => {
     setModalOpen(false);

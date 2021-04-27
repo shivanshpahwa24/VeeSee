@@ -105,8 +105,8 @@ body {
   padding: 0.2rem 0.3rem 0.4rem 0.4rem;
 }
 .callRoom-video-off-icon {
-  color: white;
   position: absolute;
+  color: white;
   top: 50%;
   left: 50%;
   transform: translate(

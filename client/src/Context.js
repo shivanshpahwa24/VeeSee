@@ -10,7 +10,6 @@ const ContextProvider = ({ children }) => {
   const [callEnded, setCallEnded] = useState(false);
   const [noCall, setNoCall] = useState(true);
   const [stream, setStream] = useState();
-  const [userStream, setUserStream] = useState();
   const [callRejected, setCallRejected] = useState(false);
   const [name, setName] = useState("");
   const [call, setCall] = useState({});
@@ -95,7 +94,7 @@ const ContextProvider = ({ children }) => {
       initiator: true,
       trickle: false,
       stream,
-      /* config: {
+      config: {
         iceServers: [
           { url: "stun:stun01.sipphone.com" },
           { url: "stun:stun.ekiga.net" },
@@ -132,7 +131,7 @@ const ContextProvider = ({ children }) => {
             username: "28224511:1379330808",
           },
         ],
-      }, */
+      },
     });
     connectionRef.current = peer;
 
@@ -249,7 +248,6 @@ const ContextProvider = ({ children }) => {
         userVideo,
         nameOfCalledUser,
         setStream,
-        userStream,
         renderLanding,
         renderCall,
         callRejected,

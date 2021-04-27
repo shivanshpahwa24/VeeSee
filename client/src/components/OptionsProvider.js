@@ -28,7 +28,7 @@ const OptionsProvider = () => {
   const [callingModalOpen, setCallingModalOpen] = useState(true);
   const [receivingModalOpen, setReceivingModalOpen] = useState(true);
 
-  const [direction, setDirection] = useState({
+  const [direction] = useState({
     vertical: "bottom",
     horizontal: "left",
   });
