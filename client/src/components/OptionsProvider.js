@@ -34,7 +34,7 @@ const OptionsProvider = () => {
   });
   const { vertical, horizontal } = direction;
   return (
-    <div className="d-sm-flex justify-content-between align-items-center">
+    <div className="d-sm-flex justify-content-between">
       <div className="w-sm-50 w-100 separator py-sm-5 ">
         <div className="col-sm-8 mx-auto">
           <h4 className="options-heading grey-text text-center pb-5">
@@ -78,12 +78,12 @@ const OptionsProvider = () => {
           </form>
         </div>
       </div>
-      {/* <div className="d-none d-sm-block headerDivider p-5"></div> */}
-      <div className="w-sm-50 w-100 pb-5 pb-sm-0 mt-5 mt-sm-0">
+      <div className="w-sm-50 w-100 pb-5 py-sm-5 mt-5 mt-sm-0">
         <div className="col-sm-8 d-flex flex-column justify-content-center align-items-center mx-auto">
           <h4 className="options-heading grey-text text-center mb-5">
-            Enter your name and then copy your id to provide it to the person
-            you are trying to communicate with
+            Share your id with the user you wish to communicate with
+            {/* Enter your name and then copy your id to provide it to the person
+            you are trying to communicate with */}
           </h4>
           <div className="options">
             <form
@@ -91,14 +91,14 @@ const OptionsProvider = () => {
                 e.preventDefault();
                 setMe({ ...me, name: nameForCall });
                 setIdAlertOpen(true);
-                /* setInterval(() => {
+                setInterval(() => {
                   setIdAlertOpen(false);
-                }, 1000); */
+                }, 5000);
               }}
               className="form-inline"
             >
               <input
-                className="form-control mr-sm-1"
+                className="form-control mr-lg-1"
                 name="nameForCall"
                 placeholder="Enter your name"
                 value={nameForCall}
@@ -107,10 +107,12 @@ const OptionsProvider = () => {
                 type="text"
                 required
               />
+              {/* Enter your name and then copy your id to provide 
+              it to the person you are trying to communicate with */}
               <CopyToClipboard text={me.id}>
                 <button
                   type="submit"
-                  className="callButton ml-sm-1 mt-sm-0 mt-2"
+                  className="callButton ml-lg-1 mt-lg-0 mt-2"
                 >
                   <FileCopyIcon fontSize="small" /> Copy Your ID
                 </button>

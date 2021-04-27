@@ -121,6 +121,15 @@ body {
 .callRoom-footer-button:hover {
   cursor: pointer;
 }
+
+@media (max-width: 992px) {
+  .options .form-inline {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
 @media (max-width: 576px) {
   body {
     background: url("./assets/bg.svg");
@@ -152,12 +161,6 @@ body {
     font-size: 0.9rem;
   }
 
-  .options .form-inline {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
   .video-player {
     height: 35vh;
     width: 95%;

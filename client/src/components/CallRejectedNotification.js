@@ -10,7 +10,7 @@ const CallRejectedNotification = ({ modalOpen, setModalOpen }) => {
   return (
     <>
       <DialogNotification
-        dialogTitle={`Call Rejected`}
+        dialogTitle={`Call Declined`}
         handleClose={handleClose}
         modalOpen={modalOpen}
       ></DialogNotification>

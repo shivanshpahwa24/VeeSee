@@ -45,7 +45,9 @@ const ContextProvider = ({ children }) => {
     socket.current.on("me", (id) => setMe({ ...me, id }));
 
     socket.current.on("callUser", ({ from, name: callerName, signal }) => {
+      //On receiving call notification from the user trying to call us by ID
       setCall({ isReceivingCall: true, from, name: callerName, signal });
+      setIdOfOtherUser(from);
     });
     socket.current.on("audioMuted", () => {
       setUserAudioMuted(!userAudioMuted);
@@ -69,7 +71,6 @@ const ContextProvider = ({ children }) => {
         myName: me.name,
       });
     });
-    setIdOfOtherUser(call.from);
     peer.on("stream", (currentStream) => {
       userVideo.current.srcObject = currentStream;
     });
@@ -185,7 +186,6 @@ const ContextProvider = ({ children }) => {
 
   const rejectCall = () => {
     socket.current.emit("rejected", { to: idOfOtherUser });
-
     setTimeout(() => {
       window.location.reload();
     }, 2000);
