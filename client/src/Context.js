@@ -95,7 +95,7 @@ const ContextProvider = ({ children }) => {
       initiator: true,
       trickle: false,
       stream,
-      config: {
+      /* config: {
         iceServers: [
           { url: "stun:stun01.sipphone.com" },
           { url: "stun:stun.ekiga.net" },
@@ -132,7 +132,7 @@ const ContextProvider = ({ children }) => {
             username: "28224511:1379330808",
           },
         ],
-      },
+      }, */
     });
     connectionRef.current = peer;
 

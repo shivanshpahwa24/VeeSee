@@ -1,8 +1,10 @@
 const express = require("express");
 const http = require("http");
 const cors = require("cors");
+const sslRedirect = require("heroku-ssl-redirect").default;
 
 const app = express();
+app.use(sslRedirect());
 
 const server = http.createServer(app);
 
