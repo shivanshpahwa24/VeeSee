@@ -4,6 +4,8 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import { ContextProvider } from "./Context";
 
+import * as serviceWorker from "./serviceWorker";
+
 ReactDOM.render(
   <React.StrictMode>
     <ContextProvider>
@@ -12,3 +14,5 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById("root")
 );
+
+serviceWorker.register();
