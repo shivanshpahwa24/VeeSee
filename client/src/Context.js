@@ -68,6 +68,7 @@ const ContextProvider = ({ children }) => {
 
   const answerCall = () => {
     setCallAccepted(true);
+    ringtoneSound.unload();
     setNoCall(false);
     const peer = new Peer({ initiator: false, trickle: false, stream });
 
@@ -194,6 +195,7 @@ const ContextProvider = ({ children }) => {
   };
 
   const rejectCall = () => {
+    ringtoneSound.unload();
     socket.current.emit("rejected", { to: idOfOtherUser });
     setTimeout(() => {
       window.location.reload();
