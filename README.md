@@ -1,4 +1,5 @@
 A video-calling web application built with WebRTC and React that provides peer-to-peer video and audio communication in a web browser with no plugins or extensions required.
+You can call a friend and even share your screen if you want to show some presentation.
 
 The app is a PWA so you can also install it on your phone.
 
@@ -11,6 +12,8 @@ Open the application and you'll have two options:-
 - Call a user by specifying their ID
 - Share your id with the user you wish to communicate with
 
+**Note** : You need to allow access to video and audio to place calls.
+
 ## **_Screenshots :-_**
 
 ![screencapture-veesee-herokuapp-2021-04-28-19_57_31](https://user-images.githubusercontent.com/54510593/116424883-81531f80-a85f-11eb-9928-a9f4be54bb47.png)
@@ -18,7 +21,6 @@ Open the application and you'll have two options:-
 ![screencapture-veesee-herokuapp-2021-04-28-19_58_36](https://user-images.githubusercontent.com/54510593/116424900-844e1000-a85f-11eb-92cb-91b60880c546.png)
 
 ![screencapture-veesee-herokuapp-2021-04-28-19_59_55](https://user-images.githubusercontent.com/54510593/116424913-86b06a00-a85f-11eb-85c0-b52392ad8ce9.png)
-
 
 ## **_On mobile phones :-_**
 
