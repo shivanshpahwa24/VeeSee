@@ -1,6 +1,14 @@
 import React, { createContext, useEffect, useState, useRef } from "react";
 import { io } from "socket.io-client";
 import Peer from "simple-peer";
+import { Howl } from "howler";
+import ringtone from "./assets/ringtone.mp3";
+
+const ringtoneSound = new Howl({
+  src: [ringtone],
+  loop: true,
+  preload: true,
+});
 
 const SocketContext = createContext();
 
@@ -45,7 +53,9 @@ const ContextProvider = ({ children }) => {
 
     socket.current.on("callUser", ({ from, name: callerName, signal }) => {
       //On receiving call notification from the user trying to call us by ID
+      ringtoneSound.play();
       setCall({ isReceivingCall: true, from, name: callerName, signal });
+
       setIdOfOtherUser(from);
     });
     socket.current.on("audioMuted", () => {
