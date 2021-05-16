@@ -210,6 +210,7 @@ const ContextProvider = ({ children }) => {
   };
 
   const shareScreen = () => {
+    setScreenSharing(!screenSharing);
     navigator.mediaDevices
       .getDisplayMedia({ cursor: true })
       .then((screenStream) => {
@@ -218,17 +219,17 @@ const ContextProvider = ({ children }) => {
           screenStream.getVideoTracks()[0],
           stream
         );
-        screenShareVideo.current.srcObject = screenStream;
+        myVideo.current.srcObject = screenStream;
         screenStream.getTracks()[0].onended = () => {
           connectionRef.current.replaceTrack(
             screenStream.getVideoTracks()[0],
             stream.getVideoTracks()[0],
             stream
           );
-          screenShareVideo.current.srcObject = stream;
+          myVideo.current.srcObject = stream;
         };
       });
-    setScreenSharing(!screenSharing);
+
     socket.current.emit("screenSharing", { to: idOfOtherUser });
   };
 
