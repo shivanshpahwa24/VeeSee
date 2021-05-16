@@ -50,6 +50,10 @@ io.on("connection", (socket) => {
   socket.on("videoMuted", (data) => {
     io.to(data.to).emit("videoMuted");
   });
+
+  socket.on("screenSharing", (data) => {
+    io.to(data.to).emit("screenSharing");
+  });
 });
 
 // Serve static assets in production

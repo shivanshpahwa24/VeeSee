@@ -7,6 +7,8 @@ import MicIcon from "@material-ui/icons/Mic";
 import MicOffIcon from "@material-ui/icons/MicOff";
 import VideocamOutlinedIcon from "@material-ui/icons/VideocamOutlined";
 import VideocamOffOutlinedIcon from "@material-ui/icons/VideocamOffOutlined";
+import ScreenShareIcon from "@material-ui/icons/ScreenShare";
+import StopScreenShareIcon from "@material-ui/icons/StopScreenShare";
 
 const VideoPlayer = () => {
   const {
@@ -26,6 +28,10 @@ const VideoPlayer = () => {
     userVideoMuted,
     toggleMuteVideo,
     toggleMuteAudio,
+    shareScreen,
+    screenSharing,
+    userScreenSharing,
+    screenShareVideo,
   } = useContext(SocketContext);
 
   const [confirmationModal, setConfirmationModal] = useState(false);
@@ -41,55 +47,122 @@ const VideoPlayer = () => {
   return (
     <div className="callRoom">
       <div className="video-player-container d-flex flex-column flex-sm-row justify-content-center align-items-center">
-        <div className="video-player mr-sm-1 ml-sm-2 mt-3 mt-sm-0">
-          {stream && (
-            <video
-              id="myVideo"
-              playsInline
-              muted
-              ref={myVideo}
-              autoPlay
-              className="actualVideo"
-            />
-          )}
-          {videoMuted && (
-            <div className="callRoom-video-off-icon">
-              <VideocamOffOutlinedIcon style={{ fontSize: 50 }} />
+        {screenSharing || userScreenSharing ? (
+          <>
+            <div className="video-player mr-sm-1 ml-sm-2 mt-3 mt-sm-0">
+              <video
+                id="screenShareVideo"
+                playsInline
+                ref={screenShareVideo}
+                autoPlay
+                className="actualVideo"
+              />
             </div>
-          )}
-          <p className="video-player-name">
-            {audioMuted && (
-              <span className="callRoom-buttons-off callRoom-mic-off-icon">
-                <MicOffIcon style={{ fontSize: 16 }} />
-              </span>
-            )}{" "}
-            {name || me.name} (You)
-          </p>
-        </div>
-        <div className="video-player mr-sm-2 ml-sm-1 my-3 my-sm-0">
-          {callAccepted && !callEnded && (
-            <video
-              id="userVideo"
-              playsInline
-              ref={userVideo}
-              autoPlay
-              className="actualVideo"
-            />
-          )}
-          {userVideoMuted && (
-            <div className="callRoom-video-off-icon">
-              <VideocamOffOutlinedIcon style={{ fontSize: 50 }} />
+            <div>
+              <div className="video-player mr-sm-1 ml-sm-2 mt-3 mt-sm-0">
+                {stream && (
+                  <video
+                    id="myVideo"
+                    playsInline
+                    muted
+                    ref={myVideo}
+                    autoPlay
+                    className="actualVideo"
+                  />
+                )}
+                {videoMuted && (
+                  <div className="callRoom-video-off-icon">
+                    <VideocamOffOutlinedIcon style={{ fontSize: 50 }} />
+                  </div>
+                )}
+                <p className="video-player-name">
+                  {audioMuted && (
+                    <span className="callRoom-buttons-off callRoom-mic-off-icon">
+                      <MicOffIcon style={{ fontSize: 16 }} />
+                    </span>
+                  )}{" "}
+                  {name || me.name} (You)
+                </p>
+              </div>
+              <div className="video-player mr-sm-2 ml-sm-1 my-3 my-sm-0">
+                {callAccepted && !callEnded && (
+                  <video
+                    id="userVideo"
+                    playsInline
+                    ref={userVideo}
+                    autoPlay
+                    className="actualVideo"
+                  />
+                )}
+                {userVideoMuted && (
+                  <div className="callRoom-video-off-icon">
+                    <VideocamOffOutlinedIcon style={{ fontSize: 50 }} />
+                  </div>
+                )}
+                <p className="video-player-name">
+                  {userAudioMuted && (
+                    <span className="callRoom-buttons-off callRoom-mic-off-icon">
+                      <MicOffIcon style={{ fontSize: 16 }} />
+                    </span>
+                  )}{" "}
+                  {call.name || nameOfCalledUser}
+                </p>
+              </div>
             </div>
-          )}
-          <p className="video-player-name">
-            {userAudioMuted && (
-              <span className="callRoom-buttons-off callRoom-mic-off-icon">
-                <MicOffIcon style={{ fontSize: 16 }} />
-              </span>
-            )}{" "}
-            {call.name || nameOfCalledUser}
-          </p>
-        </div>
+          </>
+        ) : (
+          <>
+            <div className="video-player mr-sm-1 ml-sm-2 mt-3 mt-sm-0">
+              {stream && (
+                <video
+                  id="myVideo"
+                  playsInline
+                  muted
+                  ref={myVideo}
+                  autoPlay
+                  className="actualVideo"
+                />
+              )}
+              {videoMuted && (
+                <div className="callRoom-video-off-icon">
+                  <VideocamOffOutlinedIcon style={{ fontSize: 50 }} />
+                </div>
+              )}
+              <p className="video-player-name">
+                {audioMuted && (
+                  <span className="callRoom-buttons-off callRoom-mic-off-icon">
+                    <MicOffIcon style={{ fontSize: 16 }} />
+                  </span>
+                )}{" "}
+                {name || me.name} (You)
+              </p>
+            </div>
+            <div className="video-player mr-sm-2 ml-sm-1 my-3 my-sm-0">
+              {callAccepted && !callEnded && (
+                <video
+                  id="userVideo"
+                  playsInline
+                  ref={userVideo}
+                  autoPlay
+                  className="actualVideo"
+                />
+              )}
+              {userVideoMuted && (
+                <div className="callRoom-video-off-icon">
+                  <VideocamOffOutlinedIcon style={{ fontSize: 50 }} />
+                </div>
+              )}
+              <p className="video-player-name">
+                {userAudioMuted && (
+                  <span className="callRoom-buttons-off callRoom-mic-off-icon">
+                    <MicOffIcon style={{ fontSize: 16 }} />
+                  </span>
+                )}{" "}
+                {call.name || nameOfCalledUser}
+              </p>
+            </div>
+          </>
+        )}
       </div>
       <div className="callRoom-footer">
         <button
@@ -116,6 +189,16 @@ const VideoPlayer = () => {
         >
           {videoMuted ? <VideocamOffOutlinedIcon /> : <VideocamOutlinedIcon />}
         </button>
+        <div className="share-screen-button">
+          <button
+            className={`callRoom-footer-button ${
+              screenSharing ? "callRoom-buttons-off" : "callRoom-buttons-on"
+            }`}
+            onClick={shareScreen}
+          >
+            <ScreenShareIcon />
+          </button>
+        </div>
       </div>
       <DialogNotification
         dialogTitle={`Are you sure you want to leave the call?`}

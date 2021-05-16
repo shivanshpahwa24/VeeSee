@@ -68,6 +68,7 @@ body {
 .callRoom-footer {
   background: white;
   height: 10vh;
+  width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -120,6 +121,10 @@ body {
 }
 .callRoom-footer-button:hover {
   cursor: pointer;
+}
+.share-screen-button {
+  position: absolute;
+  right: 2rem;
 }
 
 @media (max-width: 992px) {
@@ -175,5 +180,8 @@ body {
   .callRoom-footer-button {
     padding: 0.5rem 0.6rem;
     margin: 0.5rem;
+  }
+  .share-screen-button {
+    right: 1rem;
   }
 }

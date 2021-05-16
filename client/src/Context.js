@@ -25,7 +25,8 @@ const ContextProvider = ({ children }) => {
   const [videoMuted, setVideoMuted] = useState(false);
   const [userAudioMuted, setUserAudioMuted] = useState(false);
   const [userVideoMuted, setUserVideoMuted] = useState(false);
-
+  const [screenSharing, setScreenSharing] = useState(false);
+  const [userScreenSharing, setUserScreenSharing] = useState(false);
   const [me, setMe] = useState({
     id: "",
     name: "",
@@ -35,6 +36,7 @@ const ContextProvider = ({ children }) => {
   const myVideo = useRef();
   const userVideo = useRef();
   const connectionRef = useRef();
+  const screenShareVideo = useRef();
   const socket = useRef();
 
   useEffect(() => {
@@ -61,10 +63,15 @@ const ContextProvider = ({ children }) => {
     socket.current.on("audioMuted", () => {
       setUserAudioMuted(!userAudioMuted);
     });
+
     socket.current.on("videoMuted", () => {
       setUserVideoMuted(!userVideoMuted);
     });
-  }, [me, userAudioMuted, userVideoMuted]);
+
+    socket.current.on("screenSharing", () => {
+      setUserScreenSharing(!userScreenSharing);
+    });
+  }, [me, userAudioMuted, userVideoMuted, userScreenSharing]);
 
   const answerCall = () => {
     setCallAccepted(true);
@@ -202,6 +209,29 @@ const ContextProvider = ({ children }) => {
     }, 2000);
   };
 
+  const shareScreen = () => {
+    navigator.mediaDevices
+      .getDisplayMedia({ cursor: true })
+      .then((screenStream) => {
+        connectionRef.current.replaceTrack(
+          stream.getVideoTracks()[0],
+          screenStream.getVideoTracks()[0],
+          stream
+        );
+        screenShareVideo.current.srcObject = screenStream;
+        screenStream.getTracks()[0].onended = () => {
+          connectionRef.current.replaceTrack(
+            screenStream.getVideoTracks()[0],
+            stream.getVideoTracks()[0],
+            stream
+          );
+          screenShareVideo.current.srcObject = stream;
+        };
+      });
+    setScreenSharing(!screenSharing);
+    socket.current.emit("screenSharing", { to: idOfOtherUser });
+  };
+
   const renderLanding = () => {
     if (!callAccepted && noCall) return "block";
     return "none";
@@ -248,6 +278,8 @@ const ContextProvider = ({ children }) => {
         stream,
         name,
         setName,
+        shareScreen,
+        screenSharing,
         callEnded,
         setCallEnded,
         me,
@@ -271,6 +303,8 @@ const ContextProvider = ({ children }) => {
         userAudioMuted,
         userVideoMuted,
         rejectCall,
+        userScreenSharing,
+        screenShareVideo,
       }}
     >
       {children}
