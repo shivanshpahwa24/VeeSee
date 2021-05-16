@@ -3,9 +3,16 @@ import { io } from "socket.io-client";
 import Peer from "simple-peer";
 import { Howl } from "howler";
 import ringtone from "./assets/ringtone.mp3";
+import dialingRingtone from "./assets/dialing-ringtone.mp3";
 
 const ringtoneSound = new Howl({
   src: [ringtone],
+  loop: true,
+  preload: true,
+});
+
+const dialingRingtoneSound = new Howl({
+  src: [dialingRingtone],
   loop: true,
   preload: true,
 });
@@ -109,6 +116,7 @@ const ContextProvider = ({ children }) => {
 
   const callUser = (id) => {
     setCalling(true);
+    dialingRingtoneSound.play();
     setIdOfOtherUser(id);
     const peer = new Peer({
       initiator: true,
@@ -173,6 +181,7 @@ const ContextProvider = ({ children }) => {
     });
 
     socket.current.on("callAccepted", (signal, myName) => {
+      dialingRingtoneSound.unload();
       setNameOfCalledUser(myName);
       peer.signal(signal);
       setNoCall(false);
