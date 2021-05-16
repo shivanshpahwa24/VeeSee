@@ -31,7 +31,6 @@ const VideoPlayer = () => {
     shareScreen,
     screenSharing,
     userScreenSharing,
-    screenShareVideo,
   } = useContext(SocketContext);
 
   const [confirmationModal, setConfirmationModal] = useState(false);
@@ -55,7 +54,7 @@ const VideoPlayer = () => {
               muted
               ref={myVideo}
               autoPlay
-              className="actualVideo"
+              className={screenSharing ? "screenVideo" : "actualVideo"}
             />
           )}
           {videoMuted && (
@@ -79,7 +78,7 @@ const VideoPlayer = () => {
               playsInline
               ref={userVideo}
               autoPlay
-              className="actualVideo"
+              className={userScreenSharing ? "screenVideo" : "actualVideo"}
             />
           )}
           {userVideoMuted && (
@@ -125,11 +124,18 @@ const VideoPlayer = () => {
         <div className="share-screen-button">
           <button
             className={`callRoom-footer-button ${
-              screenSharing ? "callRoom-buttons-off" : "callRoom-buttons-on"
+              screenSharing || userScreenSharing
+                ? "callRoom-buttons-off"
+                : "callRoom-buttons-on"
             }`}
-            onClick={shareScreen}
+            onClick={() => shareScreen()}
+            disabled={screenSharing || userScreenSharing}
           >
-            <ScreenShareIcon />
+            {screenSharing || userScreenSharing ? (
+              <StopScreenShareIcon />
+            ) : (
+              <ScreenShareIcon />
+            )}
           </button>
         </div>
       </div>

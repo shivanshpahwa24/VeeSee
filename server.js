@@ -54,6 +54,9 @@ io.on("connection", (socket) => {
   socket.on("screenSharing", (data) => {
     io.to(data.to).emit("screenSharing");
   });
+  socket.on("screenSharingOff", (data) => {
+    io.to(data.to).emit("screenSharingOff");
+  });
 });
 
 // Serve static assets in production

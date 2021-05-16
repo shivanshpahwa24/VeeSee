@@ -36,7 +36,6 @@ const ContextProvider = ({ children }) => {
   const myVideo = useRef();
   const userVideo = useRef();
   const connectionRef = useRef();
-  const screenShareVideo = useRef();
   const socket = useRef();
 
   useEffect(() => {
@@ -69,7 +68,10 @@ const ContextProvider = ({ children }) => {
     });
 
     socket.current.on("screenSharing", () => {
-      setUserScreenSharing(!userScreenSharing);
+      setUserScreenSharing(true);
+    });
+    socket.current.on("screenSharingOff", () => {
+      setUserScreenSharing(false);
     });
   }, [me, userAudioMuted, userVideoMuted, userScreenSharing]);
 
@@ -210,7 +212,6 @@ const ContextProvider = ({ children }) => {
   };
 
   const shareScreen = () => {
-    setScreenSharing(!screenSharing);
     navigator.mediaDevices
       .getDisplayMedia({ cursor: true })
       .then((screenStream) => {
@@ -220,6 +221,8 @@ const ContextProvider = ({ children }) => {
           stream
         );
         myVideo.current.srcObject = screenStream;
+        setScreenSharing(true);
+        socket.current.emit("screenSharing", { to: idOfOtherUser });
         screenStream.getTracks()[0].onended = () => {
           connectionRef.current.replaceTrack(
             screenStream.getVideoTracks()[0],
@@ -227,10 +230,10 @@ const ContextProvider = ({ children }) => {
             stream
           );
           myVideo.current.srcObject = stream;
+          setScreenSharing(false);
+          socket.current.emit("screenSharingOff", { to: idOfOtherUser });
         };
       });
-
-    socket.current.emit("screenSharing", { to: idOfOtherUser });
   };
 
   const renderLanding = () => {
@@ -279,8 +282,6 @@ const ContextProvider = ({ children }) => {
         stream,
         name,
         setName,
-        shareScreen,
-        screenSharing,
         callEnded,
         setCallEnded,
         me,
@@ -305,7 +306,9 @@ const ContextProvider = ({ children }) => {
         userVideoMuted,
         rejectCall,
         userScreenSharing,
-        screenShareVideo,
+        setScreenSharing,
+        shareScreen,
+        screenSharing,
       }}
     >
       {children}
